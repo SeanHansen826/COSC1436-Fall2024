@@ -4,7 +4,6 @@
 
 #include<iostream>
 #include<iomanip>
-//included iomanip for use of std::setprecision();
 
 int main()
 {
@@ -18,10 +17,10 @@ int main()
     std::cin >> userName;
     std::cout << std::endl;
 
-    double lab1Grade = 0.0;
-    double lab2Grade = 0.0;
-    double lab3Grade = 0.0;
-    double lab4Grade = 0.0;
+    int lab1Grade;
+    int lab2Grade;
+    int lab3Grade;
+    int lab4Grade;
 
     std::cout << "Please Input Your Lab Grades, " << userName << ":\n";
     std::cout << "Lab 1: ";
@@ -34,9 +33,9 @@ int main()
     std::cin >> lab4Grade;
     std::cout << std::endl;
 
-    double exam1Grade = 0.0;
-    double exam2Grade = 0.0;
-    double exam3Grade = 0.0;
+    int exam1Grade;
+    int exam2Grade;
+    int exam3Grade;
     
     std::cout << "Please Input your Exam Grades, " << userName << ":\n";
     std::cout << "Exam 1: ";
@@ -47,14 +46,14 @@ int main()
     std::cin >> exam3Grade;
     std::cout << std::endl;
 
-    double participationGrade = 0.0;
+    int participationGrade;
 
     std::cout << "Please Input Your Participation Grade, " << userName << ":\n";
     std::cout << "Participation Grade: ";
     std::cin >> participationGrade;
     std::cout << std::endl;
 
-    double finalExam = 0.0;
+    int finalExam;
     std::cout << "Please Input Your Final Exam Grade, " << userName << ":\n";
     std::cout << "Final Exam Grade: ";
     std::cin >> finalExam;
@@ -75,12 +74,10 @@ int main()
     std::cout << "Final Exam: " << finalExam << std::endl;
     std::cout << std::endl;
 
-    double labAssigmentCount = 4;
-    double labAverage = (lab1Grade + lab2Grade + lab3Grade + lab4Grade) / labAssigmentCount;
+    double labAverage = (lab1Grade + lab2Grade + lab3Grade + lab4Grade) / 4.0;
     std::cout << "Lab Average (65% of total): " << std::fixed << std::setprecision(2) << labAverage << std::endl;
 
-    double examAssignmentCount = 3;
-    double examAverage = (exam1Grade + exam2Grade + exam3Grade) / examAssignmentCount;
+    double examAverage = (exam1Grade + exam2Grade + exam3Grade) / 3.0;
     std::cout << "Exam Average (20% of total): " << std::fixed << std::setprecision(2) << examAverage << std::endl;
 
     std::cout << "Participation (5% of total): " << participationGrade << std::endl;
