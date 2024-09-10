@@ -4,6 +4,7 @@
 
 #include<iostream>
 #include<iomanip>
+//included iomanip for use of std::setprecision();
 
 int main()
 {
@@ -74,11 +75,11 @@ int main()
     std::cout << "Final Exam: " << finalExam << std::endl;
     std::cout << std::endl;
 
-    const double labAssigmentCount = 4;
+    double labAssigmentCount = 4;
     double labAverage = (lab1Grade + lab2Grade + lab3Grade + lab4Grade) / labAssigmentCount;
     std::cout << "Lab Average (65% of total): " << std::fixed << std::setprecision(2) << labAverage << std::endl;
 
-    const double examAssignmentCount = 3;
+    double examAssignmentCount = 3;
     double examAverage = (exam1Grade + exam2Grade + exam3Grade) / examAssignmentCount;
     std::cout << "Exam Average (20% of total): " << std::fixed << std::setprecision(2) << examAverage << std::endl;
 
