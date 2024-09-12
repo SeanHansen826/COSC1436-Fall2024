@@ -128,23 +128,23 @@ int main()
     ////Formatted output
     //std::cout << 4.567898357738 << std::endl; // cout will determine the best format to use for the implication (scientific notation, rounded to 4 after dec point, etc...)
     //std::cout << 5.67e3 << std::endl;
-    
-    
-    // Rectangular select Mode -- CTRL + ALT, click and drag.
-    //      will activate rect select mode, affecting a rectangular area.
-    
-    
-    // Create a table
-    // Manipulator          |   behavior                            |   Persist
-    // --------
-    // setw(i)              |   pads the value to i (setwidth)      |   Not persistent across the columns, have to replicate line for every column (default right justified)
-    // left                 |   Left justifies                      |   Persistent to subsequent expressions
-    // right                |   Right justifies                     |   Persistent to subsequent expressions
-    // fixed                |   forces fixed point notation (0.00)  |   Persistent
-    // setprecision(i)      |   setd precision of floats            |   Persistent      // sets precision to total digits if !fixed and decimal digits is fixed
-    // setfill(char)        |   characters to pad with              |   Persistent      // should be set back if not intending to continue to use the new fill for all whitespaces
+    //
+    //
+    //// Rectangular select Mode -- CTRL + ALT, click and drag.
+    ////      will activate rect select mode, affecting a rectangular area.
+    //
+    //
+    //// Create a table
+    //// Manipulator          |   behavior                            |   Persist
+    //// --------
+    //// setw(i)              |   pads the value to i (setwidth)      |   Not persistent across the columns, have to replicate line for every column (default right justified)
+    //// left                 |   Left justifies                      |   Persistent to subsequent expressions
+    //// right                |   Right justifies                     |   Persistent to subsequent expressions
+    //// fixed                |   forces fixed point notation (0.00)  |   Persistent
+    //// setprecision(i)      |   setd precision of floats            |   Persistent      // sets precision to total digits if !fixed and decimal digits is fixed
+    //// setfill(char)        |   characters to pad with              |   Persistent      // should be set back if not intending to continue to use the new fill for all whitespaces
 
-    cout << left << setw(8) << "Student" << setw(6) << "Grade " << setw(6) << "Letter" << endl;
+    cout << left << setw(8) << "Student" << setw(6) << "Grade" << setw(6) << "Letter" << endl;
     cout << setw(20) << setfill ('-') << "" << setfill(' ') << endl;
     cout << fixed << setprecision(2);
     cout << setw(8) << "Bob" << setw(6) << 95.67 << setw(6) << "A" << endl;
