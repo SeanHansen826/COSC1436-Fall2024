@@ -16,7 +16,7 @@ int main()
 
     string userName;
 
-    cout << "Please Input Your First and Last Name:\t";
+    cout << "Please Input Your First and Last Name: ";
     getline(cin, userName);
     cout << endl;
 
