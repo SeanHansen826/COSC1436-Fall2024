@@ -13,6 +13,7 @@ int main()
     cout << "Lab 1\n";
     cout << "Sean Hansen\n";
     cout << "COSC1436-Fall2024\n";
+    cout << endl;
 
     string userName;
 
@@ -20,10 +21,7 @@ int main()
     getline(cin, userName);
     cout << endl;
 
-    int lab1Grade;
-    int lab2Grade;
-    int lab3Grade;
-    int lab4Grade;
+    int lab1Grade; int lab2Grade; int lab3Grade; int lab4Grade;
 
     cout << "Please Input Your Lab Grades, " << userName << ":\n";
     cout << "Lab 1: ";
@@ -36,9 +34,7 @@ int main()
     cin >> lab4Grade;
     cout << endl;
 
-    int exam1Grade;
-    int exam2Grade;
-    int exam3Grade;
+    int exam1Grade; int exam2Grade; int exam3Grade;
     
     cout << "Please Input your Exam Grades, " << userName << ":\n";
     cout << "Exam 1: ";
@@ -51,21 +47,19 @@ int main()
 
     int participationGrade;
 
-    cout << "Please Input Your Participation Grade, " << userName << ":\n";
-    cout << "Participation Grade: ";
+    cout << "Please Input Your Participation Grade, " << userName << ":\n" << "Participation Grade: ";
     cin >> participationGrade;
     cout << endl;
 
     int finalExam;
-    cout << "Please Input Your Final Exam Grade, " << userName << ":\n";
-    cout << "Final Exam Grade: ";
+    cout << "Please Input Your Final Exam Grade, " << userName << ":\n" << "Final Exam Grade: ";
     cin >> finalExam;
     cout << endl;
 
     cout << fixed << setprecision(2);
     double labAverage = (lab1Grade + lab2Grade + lab3Grade + lab4Grade) / 4.0;
     double examAverage = (exam1Grade + exam2Grade + exam3Grade) / 3.0;
-    double classAverage = (examAverage * 0.20) + (labAverage * .65) + (participationGrade * .05) + (finalExam * .10); // Equation classAverage = (avgA * weightA) + (avgB * weightB)... etc.
+    double classAverage = (examAverage * 0.20) + (labAverage * .65) + (participationGrade * .05) + (finalExam * .10); // classAverage = (avgA * weightA) + (avgB * weightB)... etc.
     cout << endl;
     
     cout << setw(17) << left << "Assignment" << setw(7) << "Grade" << endl;
