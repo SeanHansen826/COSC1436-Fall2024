@@ -23,6 +23,15 @@ struct Movie
 
 };
 
+//Int data types with named values, technically writing your own primitive type
+enum MenuCommand
+{
+    MC_AddMpvie,
+    MC_EditMovie,
+    MC_DeleteMovie,
+    MC_ViewMovie
+
+};
 int main()
 {
         
@@ -69,6 +78,50 @@ int main()
 
     /////Add a new movie
     //create a new movie
+
+    //show menu
+
+    cout << "Movie Library" << endl;
+    cout << "---------------" << endl;
+    cout << "A)dd Movie" << endl;
+    cout << "E)dit Movie" << endl;
+    cout << "D)elete Movie" << endl;
+    cout << "V)iew Movie" << endl;
+
+    char input;
+    cin >> input;
+
+    //we should try and seperate input validation and core functions:
+
+    //used MenuCommand enum, with variable menuCommand
+    MenuCommand menuCommand;
+
+    switch (input)
+    {
+        case 'A':
+        case 'a': menuCommand = 1; break;
+
+        case 'E':
+        case 'e': menuCommand = 2; break;
+
+        case 'D':
+        case 'd': menuCommand = 3; break;
+
+        case 'V':
+        case 'v': menuCommand = 4; break;
+
+        default: cout << "Bad input" << endl; break;
+    };
+
+
+    //Handle Menu Command using enum
+    switch (menuCommand)
+    {
+        case MenuCommand::MC_AddMpvie:
+        case MenuCommand::MC_EditMovie:
+        case MenuCommand::MC_DeleteMovie:
+        case MenuCommand::MC_ViewMovie: cout << "Not Implemented" << endl; break;
+    };
 
     Movie movie; //= {0};
 
@@ -177,25 +230,107 @@ int main()
     else  */                              //this last line is meant to handle anything other than the described inputs ... aka "t" "f" ...
 
     //Using the Logical operators we now reduced the lines of code and computation time.
-    if (isClassic == 'Y' || isClassic == 'y')
-        movie.IsClassic = true;
-    else if (isClassic == 'N' || isClassic == 'n');
-    else
-    {
-        cout << "ERROR: You must enter Y or N ";
+    
+    //if (isClassic == 'Y' || isClassic == 'y')
+    //    movie.IsClassic = true;
+    //else if (isClassic == 'N' || isClassic == 'n');
+    //else
+    //{
+    //    cout << "ERROR: You must enter Y or N ";
 
-        cout << "Is this a classic (Y/N)? ";
-        cin >> isClassic;
-    }
+    //    cout << "Is this a classic (Y/N)? ";
+    //    cin >> isClassic;
+    //};
+
+    //          SWITCH 
+    // 
+    // switch select statement - replacement for if-elseif where same expression compared to multiple values
+    // 1. Must compare single expression to one or more constant values with equality
+    // 2. Switch Expression must be integral type (char counts) (no strings!)
+    // 3. Each case label must be a compile-time constant expression
+    //          can only be something that isn't defined during run time
+    //          can have an expression as long as it is during compile time not run time.
+    // 4. Each case label must be unique (no duplicates)
+    // Switch (E)
+    // {
+    //      case-statement*
+    // }
+    // case statement -- case expression : statement
+    //during run time, it finds if something's case label is equal, and then finds it in the list of possibilities, ignoring the others!!!
+    //NIGHT AND DAY PERFORMANCE DIFFERENCE
+    //violates the single statement, includes the Break; statement tacked onto the finished statement.
+
+    //Default executes if nothing matches the cases. (make sure it's last!)
+
+    //to get switches to break out of the fallthrough, use breaks! mostly used in loops but can be used inside of switches as well...
+
+    switch (isClassic)
+    {
+        case 'Y': movie.IsClassic = true; break;
+        case 'y': movie.IsClassic = true; break;
+
+        case 'N': movie.IsClassic = false; break;
+        case 'n': movie.IsClassic = false; break;
+
+        default:
+        {
+            cout << "ERROR: You must enter Y or N ";
+
+            cout << "Is this a classic (Y/N)? ";
+            cin >> isClassic;
+        };;
+    };
+
+    //if (isClassic == 'Y' || isClassic == 'y')
+    //    movie.IsClassic = true;
+    //else if (isClassic == 'N' || isClassic == 'n');
+    //else
+    //{
+    //    cout << "ERROR: You must enter Y or N ";
+
+    //    cout << "Is this a classic (Y/N)? ";
+    //    cin >> isClassic;
+    //};
+
    
+    /*
+        if (movie.IsClassic)
+            cout << "Is Classic? Yes" << endl;
+        else
+            cout << "Is Classic? No" << endl;
+    */
     /////Display movie details
     cout << "------------" << endl;
     cout << movie.Title << " (" << movie.ReleaseYear << ")" << endl;
     cout << "Run Length (mins) " << movie.RunLength << endl;
-    if (movie.IsClassic)
-        cout << "Is Classic? Yes" << endl;
-    else
-        cout << "Is Classic? No" << endl;
+    
+    // Better form but still long --
+    //string classicIndicator;
+    ///*if (movie, isClassic)
+    //    classicIndicator = "Yes";
+    //else
+    //    classicIndicator = "No";
+
+    //CONDITIONAL --   :
+    //  E bool ? E : E
+    //  if bool is true, it is the first value of the expression after the q mark
+    //  if bool false, it is the last value after q mark.
+    //      conditionals are for choosing one of two possible values, not for printing something out!
+    //      the compiler converts this expression to an if statement
+
+    //string classicIndictor = movie.IsClassic ? "Yes" : "No";
+    //cout << "Is Classic? " << classicIndicator << endl;
+
+    //              CONDITIONAL OPERATORS Ebool ? Et : Ef
+    // 
+    //may work without parens, but with them the cout cunfuses the compiler
+    //E true & E False = Must be the exact same type, Type coercion is not possible. USE STATIC CAST
+    //  This is true becuase during run time the compiler must know the type, this command happens during the run!
+    cout << "Is Classic? " << (movie.IsClassic ? "Yes" : "No") << endl;
+
+
+
+
     if (movie.Description != "")
         cout << movie.Description << endl;
     cout << "------------" << endl;
