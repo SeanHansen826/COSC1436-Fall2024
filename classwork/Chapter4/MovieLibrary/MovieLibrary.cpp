@@ -23,15 +23,27 @@ struct Movie
 
 };
 
+//Most enums are just strongly typed integers ... in c++ you can use a new syntax is used to create a new type altogether.
+//      you can add "class" to your enum initializer with more strongly typed rules about it -- now become scoped in your enum, not whole prgrm
 //Int data types with named values, technically writing your own primitive type
+//const int MenuCommand::MC_AddMovie = 0
 enum MenuCommand
 {
-    MC_AddMpvie,
-    MC_EditMovie,
-    MC_DeleteMovie,
-    MC_ViewMovie
-
+    //Begin,   //begin and end enums can be useful to range check your enum using if (>begin && <end)
+    AddMovie = 1,    //beginning value is default 0, 1, 2, 3 ... if you set one beginning value, the rest will incrementally assign
+    EditMovie,
+    DeleteMovie,
+    ViewMovie,
+    //End
 };
+
+//  not scoped to enum, all enum variables can be used for the entire program... can get around by creating an acronym for your new enum variable
+//enum class TestEnum
+//{
+//    TE_AddMovie
+//};
+//TestEnum testValue = TE_AddMovie;//TestEnum::MC_AddMovie;       you can leave off your enumerated type, comes from C
+
 int main()
 {
         
@@ -88,92 +100,127 @@ int main()
     cout << "D)elete Movie" << endl;
     cout << "V)iew Movie" << endl;
 
-    char input;
-    cin >> input;
+    /// Get input
+    //while command wraps everything involved in a block!
+    //  Pretest Loop! statement executes 0 or more times... only  executes if it is true.
+    MenuCommand menuCommand = static_cast<MenuCommand>(0);
+    //bool done = false;
+    //while (!done)
 
-    //we should try and seperate input validation and core functions:
+    //INFINITE LOOPS
+    //always make sure you do NOT have a semicolon after a while command is true
+    // ex)  while (menuCommand == 0);    note the semicolon. since it is always true it will never stop looping.
 
-    //used MenuCommand enum, with variable menuCommand
-    MenuCommand menuCommand;
-
-    switch (input)
+    while (menuCommand == 0)    //this only works if MenuCommand is initially set to whatever vairable you are checking for, and your enum's are all != 0
     {
-        case 'A':
-        case 'a': menuCommand = 1; break;
+        char input;
+        cin >> input;
 
-        case 'E':
-        case 'e': menuCommand = 2; break;
+        //we should try and seperate input validation and core functions:
 
-        case 'D':
-        case 'd': menuCommand = 3; break;
+        //used MenuCommand enum, with variable menuCommand
 
-        case 'V':
-        case 'v': menuCommand = 4; break;
+        //cannot take int and assign it to an enum type... change it to the actual enum instead of any values
+        //while loop is useful if you need to continue looping
+        switch (input)
+        {
+            case 'A':
+            case 'a': menuCommand = MenuCommand::AddMovie; break;
 
-        default: cout << "Bad input" << endl; break;
+            case 'E':
+            case 'e': menuCommand = MenuCommand::EditMovie; break;
+
+            case 'D':
+            case 'd': menuCommand = MenuCommand::DeleteMovie; break;
+
+            case 'V':
+            case 'v': menuCommand = MenuCommand::ViewMovie; break;
+
+            default: cout << "Bad input" << endl; break;
+        };
     };
+    cin.ignore();
+
+    //int shouldntWork = MenuCommand::MC_AddMovie;
+    //menuCommand = static_cast<MenuCommand>(1);
 
 
     //Handle Menu Command using enum
+    //when using enum, call to it with ::
     switch (menuCommand)
     {
-        case MenuCommand::MC_AddMpvie:
-        case MenuCommand::MC_EditMovie:
-        case MenuCommand::MC_DeleteMovie:
-        case MenuCommand::MC_ViewMovie: cout << "Not Implemented" << endl; break;
+        case MenuCommand::AddMovie:
+        case MenuCommand::EditMovie:
+        case MenuCommand::DeleteMovie:
+        case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
     };
 
     Movie movie; //= {0};
 
     //Get required Title
-    cout << "Enter a title: ";
-    getline(cin, movie.Title);
-
-    //When using an If statement, the sentence that is conditional should be indented
-
-    if (movie.Title == "")
+    while (movie.Title == "")
     {
-        cout << "ERROR: Title is required" << endl;
         cout << "Enter a title: ";
         getline(cin, movie.Title);
-    };
+
+        //When using an If statement, the sentence that is conditional should be indented
+
+        //Looping Operators
+        //-----------------
+        //  x++  |  prefix increment    |   sets x = x + 1  | stores original value and returns that    
+        //  ++x  |  postfix increment   |   sets x = x + 1  |
+        //  x--  |  prefix decrement    |   sets x = x - 1  |
+        //  --x  |  postfix decrement   |   sets x = x - 1  |
+
+        // example  x = 10
+        // cout << x++ << x
+        // grabs original value, uses that as the value of x++ (x++ is equal to 10 in the equation) but when we cout the variable x, it shows 11 which isthe side effect
+
+        // example  x = 10
+        // cout << ++x << x
+        //  grabs original value, does the increment, stores ++x as 11, and cout is 11
+
+        // post fix gives us the unmodified variable in the postfixed slot, side effect is the new variable value is incremented.
+        // pre fix gives us the modified variable in the pre fixed slot, and cout the new variable with the increment.
+        if (movie.Title == "")
+
+            cout << "ERROR: Title is required" << endl;
+    }
 
     //Get run length, at least 0 minutes
-    cout << "Enter run legth (in minutes): ";
-    cin >> movie.RunLength;
-
-    if (movie.RunLength <= 0)
+    movie.RunLength = -1;        //not recommended but makes sure the user it prompted the first time around!
+    while (movie.RunLength < 0 || movie.RunLength > 1440)
     {
-        //Look at additional stuff (example)
-        //      try and avoid nested if's, if else ifs are alright, but nested ifs can be a pain to read.
+        cout << "Enter run legth (in minutes): ";
+        cin >> movie.RunLength;
+            //Look at additional stuff (example)
+            //      try and avoid nested if's, if else ifs are alright, but nested ifs can be a pain to read.
 
-        //  Nested Ifs :::
-        //      if (condition 1){
-        //          {
-        //          If (condition 2)
-        //          }
-        //                  Statement if 1&2 are true
-        //      }else
-        //              statement if else
-        // 
-        //  Else Rules ... Elses always go withthe immediately preceding If statement !!!
-        //  Try and put {} around the else if combo you want, if else needs to go with if (cond 1) then replicate code
+            //  Nested Ifs :::
+            //      if (condition 1){
+            //          {
+            //          If (condition 2)
+            //          }
+            //                  Statement if 1&2 are true
+            //      }else
+            //              statement if else
+            // 
+            //  Else Rules ... Elses always go withthe immediately preceding If statement !!!
+            //  Try and put {} around the else if combo you want, if else needs to go with if (cond 1) then replicate code/
 
 
-        //LOGICAL OPERATORS
-        // && = and     --  if the left operand is true, expression is true. same for false
-        // || = or      --  inverse of &&
-        // !  = not     --  
+            //LOGICAL OPERATORS
+            // && = and     --  if the left operand is true, expression is true. same for false
+            // || = or      --  inverse of &&
+            // !  = not     --  
 
-        //  Truth Table
+            //  Truth Table
 
-        if (movie.RunLength < 0 || movie.RunLength > 1440)
-        {
-            cout << "ERROR: Run length must be between 0 and 1440" << endl;
-
-            cout << "Enter run length (in minutes): ";
-            cin >> movie.RunLength;
-        };
+            if (movie.RunLength < 0 || movie.RunLength > 1440)
+            {
+                cout << "ERROR: Run length must be between 0 and 1440" << endl;
+            };
+    }
         //The || removes the need for this extra else...
     //} else if (movie.RunLength > 1440)
     //{
@@ -181,19 +228,17 @@ int main()
 
     //    cout << "Enter run length (in minutes): ";
     //    cin >> movie.RunLength;
-    };
-
-    cout << "Enter release year (1900+): ";
-    cin >> movie.ReleaseYear;
-
-    if (movie.ReleaseYear <= 1900 || movie.ReleaseYear > 2100)
+    
+    while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
     {
-        cout << "ERROR: Release year must be between 1900 and 2100" << endl;
-
         cout << "Enter release year (1900+): ";
         cin >> movie.ReleaseYear;
-    };
 
+        if (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+        {
+            cout << "ERROR: Release year must be between 1900 and 2100" << endl;
+        };
+    }
 
     //  Get optional description
     cout << "Enter optional description: ";
@@ -201,85 +246,86 @@ int main()
     getline(cin, movie.Description);
 
     //  Get IsClassic
-    char isClassic;
-    cout << "Is this a Classic (Y/N)?";
-    cin >> isClassic;
-
-    //  for either or expression, you don't want to ask uneccessary questions and waste processing time.
-    //      Else statement
-    //          only use when you need to make a choice
-    //if (isClassic == 'Y')
-        //movie.IsClassic = true;
-    //else
-        //movie.IsClassic = false;
-    //  If Else If ... if (condition 1)
-    //                      statement 1
-    //                 else if (condition 2)
-    //                      statement 2
-    //                  else if etc. etc. etc.
-    //  This is useful to get out of the If command group once it's come to a decision already, not running irrelevant code.
-
-/*    if (isClassic == 'Y')
-        movie.IsClassic = true;
-    else if (isClassic == 'y')
-        movie.IsClassic = false;
-    else if (isClassic == 'N')
-        movie.IsClassic = true;
-    else if (isClassic == 'n')
-        movie.IsClassic = false;
-    else  */                              //this last line is meant to handle anything other than the described inputs ... aka "t" "f" ...
-
-    //Using the Logical operators we now reduced the lines of code and computation time.
-    
-    //if (isClassic == 'Y' || isClassic == 'y')
-    //    movie.IsClassic = true;
-    //else if (isClassic == 'N' || isClassic == 'n');
-    //else
-    //{
-    //    cout << "ERROR: You must enter Y or N ";
-
-    //    cout << "Is this a classic (Y/N)? ";
-    //    cin >> isClassic;
-    //};
-
-    //          SWITCH 
-    // 
-    // switch select statement - replacement for if-elseif where same expression compared to multiple values
-    // 1. Must compare single expression to one or more constant values with equality
-    // 2. Switch Expression must be integral type (char counts) (no strings!)
-    // 3. Each case label must be a compile-time constant expression
-    //          can only be something that isn't defined during run time
-    //          can have an expression as long as it is during compile time not run time.
-    // 4. Each case label must be unique (no duplicates)
-    // Switch (E)
-    // {
-    //      case-statement*
-    // }
-    // case statement -- case expression : statement
-    //during run time, it finds if something's case label is equal, and then finds it in the list of possibilities, ignoring the others!!!
-    //NIGHT AND DAY PERFORMANCE DIFFERENCE
-    //violates the single statement, includes the Break; statement tacked onto the finished statement.
-
-    //Default executes if nothing matches the cases. (make sure it's last!)
-
-    //to get switches to break out of the fallthrough, use breaks! mostly used in loops but can be used inside of switches as well...
-
-    switch (isClassic)
+    bool done = false;
+    while (!done)
     {
-        case 'Y': movie.IsClassic = true; break;
-        case 'y': movie.IsClassic = true; break;
+        char isClassic;
+        cout << "Is this a Classic (Y/N)?";
+        cin >> isClassic;
 
-        case 'N': movie.IsClassic = false; break;
-        case 'n': movie.IsClassic = false; break;
+        //  for either or expression, you don't want to ask uneccessary questions and waste processing time.
+        //      Else statement
+        //          only use when you need to make a choice
+        //if (isClassic == 'Y')
+            //movie.IsClassic = true;
+        //else
+            //movie.IsClassic = false;
+        //  If Else If ... if (condition 1)
+        //                      statement 1
+        //                 else if (condition 2)
+        //                      statement 2
+        //                  else if etc. etc. etc.
+        //  This is useful to get out of the If command group once it's come to a decision already, not running irrelevant code.
 
-        default:
+    /*    if (isClassic == 'Y')
+            movie.IsClassic = true;
+        else if (isClassic == 'y')
+            movie.IsClassic = false;
+        else if (isClassic == 'N')
+            movie.IsClassic = true;
+        else if (isClassic == 'n')
+            movie.IsClassic = false;
+        else  */                              //this last line is meant to handle anything other than the described inputs ... aka "t" "f" ...
+
+        //Using the Logical operators we now reduced the lines of code and computation time.
+
+        //if (isClassic == 'Y' || isClassic == 'y')
+        //    movie.IsClassic = true;
+        //else if (isClassic == 'N' || isClassic == 'n');
+        //else
+        //{
+        //    cout << "ERROR: You must enter Y or N ";
+
+        //    cout << "Is this a classic (Y/N)? ";
+        //    cin >> isClassic;
+        //};
+
+        //          SWITCH 
+        // 
+        // switch select statement - replacement for if-elseif where same expression compared to multiple values
+        // 1. Must compare single expression to one or more constant values with equality
+        // 2. Switch Expression must be integral type (char counts) (no strings!)
+        // 3. Each case label must be a compile-time constant expression
+        //          can only be something that isn't defined during run time
+        //          can have an expression as long as it is during compile time not run time.
+        // 4. Each case label must be unique (no duplicates)
+        // Switch (E)
+        // {
+        //      case-statement*
+        // }
+        // case statement -- case expression : statement
+        //during run time, it finds if something's case label is equal, and then finds it in the list of possibilities, ignoring the others!!!
+        //NIGHT AND DAY PERFORMANCE DIFFERENCE
+        //violates the single statement, includes the Break; statement tacked onto the finished statement.
+
+        //Default executes if nothing matches the cases. (make sure it's last!)
+
+        //to get switches to break out of the fallthrough, use breaks! mostly used in loops but can be used inside of switches as well...
+
+        switch (isClassic)
         {
-            cout << "ERROR: You must enter Y or N ";
+            case 'Y': 
+            case 'y': movie.IsClassic = true;  done = true; break;
 
-            cout << "Is this a classic (Y/N)? ";
-            cin >> isClassic;
-        };;
-    };
+            case 'N': 
+            case 'n': movie.IsClassic = false; done = true; break;
+
+            default:
+            {
+                cout << "ERROR: You must enter Y or N ";
+            };
+        };
+    }
 
     //if (isClassic == 'Y' || isClassic == 'y')
     //    movie.IsClassic = true;
