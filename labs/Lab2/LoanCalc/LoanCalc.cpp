@@ -24,9 +24,9 @@ int main()
     }
     
     double interestRate;
-    cout << fixed << setprecision(.02);
+    cout << fixed << setprecision(2);
     cout << "Input your interest rate (between 1.0 and 100.0): ";
     cin >> interestRate;
-    interestRate /= 100;
-    cout << interestRate; // outputs wrong
+    interestRate /= 100.0;
+    cout << interestRate; // outputs wrong, values 1.5 as 1.49999999999... why?
 }
