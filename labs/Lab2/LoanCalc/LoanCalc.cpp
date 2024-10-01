@@ -13,13 +13,13 @@ int main()
     cout << left << setw(10) << "Project" << "Loan Calculator\n" << setw(10) << "By:" << "Sean Hansen\n" << setw(10) << "Class:" << "COSC-1436-20005\n";
     cout << setw(30) << setfill('-') << "" << setfill(' ') << endl;
 
-    int initialLoan = 0;
-    while (initialLoan < 1 || initialLoan > 1000)
+    double loanBalance = 0;
+    while (loanBalance < 1 || loanBalance > 1000)
     {
         cout << "Input your initial loan amount (between 1 and 1000): ";
-        cin >> initialLoan;
+        cin >> loanBalance;
 
-        if (initialLoan < 1 || initialLoan > 1000)
+        if (loanBalance < 1 || loanBalance > 1000)
             cout << "ERROR: Initial loan must be between 1 and 1000\n";
     };
 
@@ -32,9 +32,32 @@ int main()
         if (interestRate < 1.0 || interestRate > 100.0)
             cout << "Error: Interest rate must be between 1.0 - 100.0\n";
     };
-    
-    interestRate /= 100;
-    cout << interestRate;
 
-    //Calculating table of first 12 months of loan ... table output ... for loop ... 
+    interestRate /= 100;
+    cout << "Interest stored as: " << interestRate << endl;
+
+    double totalInterest;
+    totalInterest = (loanBalance * interestRate);
+
+    double monthlyInterest = 0.0;
+
+    double monthlyPayment = 0.0;
+    monthlyPayment = (loanBalance + totalInterest) / 12.0;
+
+    for (int index = 0; index < 12; ++index)
+    {
+        cout << "Getting updated loan amount for month " << (index + 1) << "..." << endl;
+
+        if (index == 0)
+            monthlyInterest = 0;
+
+        else monthlyInterest = loanBalance * interestRate;
+
+        loanBalance = loanBalance - monthlyPayment - monthlyInterest;
+
+        if (loanBalance < 0)
+            loanBalance = 0;
+
+        cout << fixed << setprecision(2) << "|Month| " << index << " |Loan Balance| " << loanBalance << " |Monthly Interest| " << monthlyInterest << endl;
+    };
 }

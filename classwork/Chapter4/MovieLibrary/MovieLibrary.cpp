@@ -156,17 +156,7 @@ int main()
         case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
     };
 
-    Movie movie; //= {0};
-
-    //Get required Title
-    while (movie.Title == "")
-    {
-        cout << "Enter a title: ";
-        getline(cin, movie.Title);
-
-        //When using an If statement, the sentence that is conditional should be indented
-
-        //Looping Operators
+            //Looping Operators
         //-----------------
         //  x++  |  prefix increment    |   sets x = x + 1  | stores original value and returns that    
         //  ++x  |  postfix increment   |   sets x = x + 1  |
@@ -183,6 +173,18 @@ int main()
 
         // post fix gives us the unmodified variable in the postfixed slot, side effect is the new variable value is incremented.
         // pre fix gives us the modified variable in the pre fixed slot, and cout the new variable with the increment.
+    
+    Movie movie; //= {0};
+
+    //Get required Title
+    while (movie.Title == "")
+    {
+        cout << "Enter a title: ";
+        getline(cin, movie.Title);
+
+        //When using an If statement, the sentence that is conditional should be indented
+
+
         if (movie.Title == "")
 
             cout << "ERROR: Title is required" << endl;
