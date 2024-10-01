@@ -21,6 +21,7 @@ struct Movie
 
     bool IsClassic;
 
+    string Genre;
 };
 
 //Most enums are just strongly typed integers ... in c++ you can use a new syntax is used to create a new type altogether.
@@ -221,6 +222,7 @@ int main()
                 cout << "ERROR: Run length must be between 0 and 1440" << endl;
             };
     }
+
         //The || removes the need for this extra else...
     //} else if (movie.RunLength > 1440)
     //{
@@ -326,6 +328,67 @@ int main()
             };
         };
     }
+    cin.ignore();
+
+    //Get Genre
+    //Get genre(s)
+    //int genreCount = 0;
+    //while (genreCount < 5) // starting from 0, using "less than" (instead of <=) so you iterate only 5 times instead of 6
+    //{
+    //    cout << "Enter optional genre " << (genreCount + 1) << ": "; //user sees 1 - 5 while we are coding with 0 - 4
+
+    //    string genre;
+    //    getline(cin, genre);
+    //    if (genre != "")
+    //    {
+    //        movie.Genre += genre + ", ";
+    //    }
+
+    //    genreCount++; //postfix increment -- x changes to x+1 each time through
+    //}
+
+
+    //For Loop - designed to iterate a fixed number of times with a well known start and end
+    //      compiler should know how many times it is going to run ... 
+    //      while loops typically loop until it is no longer necesarry.
+
+    //  For Loop Format -- for (init expression; test expression; e3)
+    //                        single statement;   
+    // init expresion evaluates before the for loop ...
+    // test expression (condition) sees as long as it is true the for statement will loop
+    // update expression evaulates the update expression
+
+    //  For Loop is essentially ::
+    //  initial expression
+    //  while ( test expression )
+    //  {
+    //      statement
+    //      update expression
+    //  }
+    //int genreIndex = 0; -- initializing your variable (Index) inside your "for" loop scopes it into the actual loop, you cannot accidentally use it elsewhere!
+    for (int index = 0; index < 5; ++index)     // starting from 0, using "less than" (instead of <=) so you iterate only 5 times instead of 6
+    {
+        cout << "Enter optional genre " << (index + 1) << ": "; //user sees 1 - 5 while we are coding with 0 - 4
+
+        string genre;
+        getline(cin, genre);
+        if (genre == "")
+            break;  //exits loop, no update, no nothing ... just exits immediately! Do what you can to only break when you really need to
+                    //use this instead of creating an imDone Variable or similar change...
+        //continue;   //Loops only - stops current iteration and loops again (break here, restart loop)
+        movie.Genre += genre + ", ";
+    };
+
+    ////More complex For Loops
+    //for (int index = 0, int y = 1; index < 5 && index <y; ++index, y += 2) //only seperate your init expression or your update expression by commas, the conditional statement will only use the expression after the comma
+    //{
+
+    //};
+
+    //int someIndex = 0
+    //    for (;;) {}; // infinite loop !!! //can leave off parts of the expression, if there is no equation the update will infinitely check
+
+    };
 
     //if (isClassic == 'Y' || isClassic == 'y')
     //    movie.IsClassic = true;
@@ -373,10 +436,8 @@ int main()
     //E true & E False = Must be the exact same type, Type coercion is not possible. USE STATIC CAST
     //  This is true becuase during run time the compiler must know the type, this command happens during the run!
     cout << "Is Classic? " << (movie.IsClassic ? "Yes" : "No") << endl;
-
-
-
-
+    if (movie.Genre != "")
+        cout << "Genre(s) " << movie.Genre << endl;
     if (movie.Description != "")
         cout << movie.Description << endl;
     cout << "------------" << endl;
