@@ -33,38 +33,55 @@ int main()
             cout << "Error: Interest rate must be between 1.0 - 100.0\n";
     };
 
+    bool validInput = false; //set as false to make sure loop runs
+    double monthlyPayment = 0;
+    while (!validInput)
+    {
+        cout << "Input your desired monthly payment (between 0 and your initial loan balance): ";
+        cin >> monthlyPayment;
+
+        if (monthlyPayment < 0 || monthlyPayment > loanBalance)
+            cout << "Error: Monthly payment must be within 0 and your initial loan balance\n";
+        else validInput = true;
+    };
+
     interestRate /= 100;
     cout << "Interest stored as: " << interestRate << endl;
 
-    double totalInterest;
-    totalInterest = (loanBalance * interestRate);
-
     double monthlyInterest = 0.0;
 
-    double monthlyPayment = 0.0;
-    monthlyPayment = (loanBalance + totalInterest) / 12.0;
 
     for (int index = 0; index < 12; ++index)
     {
+        double oldLoanBalance = loanBalance;
+
         if (index == 0)
+        {
             monthlyInterest = 0;
-
-        else monthlyInterest = loanBalance * interestRate;
-
-        loanBalance = loanBalance - monthlyPayment - monthlyInterest;
+            loanBalance += monthlyInterest;
+        }
+        else
+        {
+            monthlyInterest = (loanBalance * interestRate);
+            loanBalance = loanBalance + monthlyInterest - monthlyPayment;
+        }
 
         if (loanBalance < 0)
         {
-            loanBalance = 0;
+            monthlyPayment = 0;
             monthlyInterest = 0;
+            loanBalance = 0;
         }
 
-        cout << fixed << setprecision(2);
+        double newLoanBalance = loanBalance;
 
-        if (index == 0)
-            cout << setw(63) << setfill('-') << "" << setfill(' ') << endl;
         
-        cout << left << "Month: " << setw(7) << (index +1) << "Loan Balance: " << setw(12) << loanBalance << "Monthly Interest: " << monthlyInterest << endl;
-        cout << setw(63) << setfill('-') << "" << setfill(' ') << endl;
+        if (index == 0)
+        {
+            cout << right << "Month" << setw(7) << "Balance" << setw(9) << "Interest" << setw(10) << "New Balance" << endl; //outputs funky, check setw's
+            cout << setw(78) << setfill('-') << "" << setfill(' ') << endl;
+        }
+        cout << fixed << setprecision(2);
+        cout << right << (index + 1) << setw(7) << oldLoanBalance << setw(9) << monthlyInterest << setw(10) << newLoanBalance << endl; //outputs funky
     };
 }
