@@ -147,7 +147,7 @@ int main()
     cout << left << setw(8) << "Student" << setw(6) << "Grade" << setw(6) << "Letter" << endl;
     cout << setw(20) << setfill ('-') << "" << setfill(' ') << endl;
     cout << fixed << setprecision(2);
-    cout << setw(8) << "Bob" << setw(6) << 95.67 << setw(6) << "A" << endl;
+    cout << setw(10+22+25) << "Bob" << setw(6) << 95.67 << setw(6) << "A" << endl;
     cout << setw(8) << "Sue" << setw(6) << 98.543 << setw(6) << "A" << endl;
     cout << setw(8) << "Jim" << setw(6) << 84.567 << setw(6) << "B" << endl;
     cout << setw(8) << "Jan" << setw(6) << 78.987 << setw(6) << "C" << endl;

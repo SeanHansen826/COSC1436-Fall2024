@@ -46,8 +46,6 @@ int main()
 
     for (int index = 0; index < 12; ++index)
     {
-        cout << "Getting updated loan amount for month " << (index + 1) << "..." << endl;
-
         if (index == 0)
             monthlyInterest = 0;
 
@@ -56,8 +54,17 @@ int main()
         loanBalance = loanBalance - monthlyPayment - monthlyInterest;
 
         if (loanBalance < 0)
+        {
             loanBalance = 0;
+            monthlyInterest = 0;
+        }
 
-        cout << fixed << setprecision(2) << "|Month| " << index << " |Loan Balance| " << loanBalance << " |Monthly Interest| " << monthlyInterest << endl;
+        cout << fixed << setprecision(2);
+
+        if (index == 0)
+            cout << setw(63) << setfill('-') << "" << setfill(' ') << endl;
+        
+        cout << left << "Month: " << setw(7) << (index +1) << "Loan Balance: " << setw(12) << loanBalance << "Monthly Interest: " << monthlyInterest << endl;
+        cout << setw(63) << setfill('-') << "" << setfill(' ') << endl;
     };
 }
