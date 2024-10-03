@@ -35,7 +35,7 @@ int main()
 
     bool validInput = false; //set as false to make sure loop runs
     double monthlyPayment = 0;
-    while (!validInput)
+    while (!validInput) //try while (true)
     {
         cout << "Input your desired monthly payment (between 0 and your initial loan balance): ";
         cin >> monthlyPayment;
