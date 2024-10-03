@@ -50,12 +50,14 @@ int main()
 
     double monthlyInterest = 0.0;
 
+    double sumInterest; //calc before finished
+    double sumPayments; //calc before finished
 
     for (int index = 0; index < 12; ++index)
     {
         double oldLoanBalance = loanBalance;
 
-        if (index == 0)
+        if (index == 0)   //modify the equation to include the (loanBalance - monthylPayment ( + monthly interest )) when the answer is <= 0
         {
             monthlyInterest = 0;
             loanBalance += monthlyInterest;
@@ -66,22 +68,45 @@ int main()
             loanBalance = loanBalance + monthlyInterest - monthlyPayment;
         }
 
-        if (loanBalance < 0)
-        {
-            monthlyPayment = 0;
-            monthlyInterest = 0;
-            loanBalance = 0;
-        }
+        
+        //if (loanBalance < 0)
+        //{
+            //monthlyPayment = 0;
+            //monthlyInterest = 0;
+            //loanBalance = 0;
+        //}
 
         double newLoanBalance = loanBalance;
 
         
         if (index == 0)
         {
-            cout << right << "Month" << setw(7) << "Balance" << setw(9) << "Interest" << setw(10) << "New Balance" << endl; //outputs funky, check setw's
-            cout << setw(78) << setfill('-') << "" << setfill(' ') << endl;
+            cout << left << setw(7) << "Month" <<setw(9) << "Balance" << setw(9) << "Payment" << setw(11) << "Interest" << "New Balance" << endl; //outputs funky, check setw's
+            cout << setw(38) << setfill('-') << "" << setfill(' ') << endl;
         }
         cout << fixed << setprecision(2);
-        cout << right << (index + 1) << setw(7) << oldLoanBalance << setw(9) << monthlyInterest << setw(10) << newLoanBalance << endl; //outputs funky
+        cout << left << setw(7) << (index + 1) << setw(9) << oldLoanBalance << setw(9) << monthlyPayment << setw(11) << monthlyInterest << newLoanBalance << endl; //outputs funky
     };
 }
+
+//   balance = $100
+//      interest = 10%
+//      payment = $10
+// 
+//      newBalance = balance - payment + interest           --you dont know the interest at run time of this code ... order is important
+// 
+//      interest = balance * interestRate
+// 
+// -     month       pay     int     new
+// 1     100         0       0       100
+// 2     100         10      9       99
+// 3     99         10      8.9     97.9
+// 4     etc...
+// 
+//      interest = newbalance * interest
+//      newBalance += interest
+// 
+//      balance = newBalance   --- meant to make sure that your newbalance is stored as your new balance instead of reusing your initial balance.
+// 
+// 
+//
