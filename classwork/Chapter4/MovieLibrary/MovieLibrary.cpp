@@ -47,6 +47,27 @@ enum MenuCommand
 
 int main()
 {
+
+    //nested loop demo
+    int iterations = 0;
+    for (int i = 0; i < 100; ++i)
+    {
+        }
+        for (int j = 0; j < 100; ++j)
+        {
+            ++iterations; //will execute 1000 times if not careful
+            cout << i << ", " << j << " = " << iterations << endl;
+
+            if (iterations % 100 == 0) // modulus is remainder ... 100 has no remainder therefore ....
+            {
+                char choice;
+                cout << "do you want to give up?";
+                cin >> choice;
+                if (choice == 'Y' || choice == 'y')
+                    break;      //this break would only take you out of the current nested loop, not all
+        };
+        cout << "Total iterations = " << iterations << endl;
+    }
         
     //Decision making - IF statement
     // if-statement :: 
@@ -112,7 +133,17 @@ int main()
     //always make sure you do NOT have a semicolon after a while command is true
     // ex)  while (menuCommand == 0);    note the semicolon. since it is always true it will never stop looping.
 
-    while (menuCommand == 0)    //this only works if MenuCommand is initially set to whatever vairable you are checking for, and your enum's are all != 0
+
+    //do while loop -- Post Test Loop
+    // executes statement, then determines whether or not to run again!
+    // 
+    //  do
+    // {
+    //      statement
+    // } while (expression)
+    //
+
+    do     
     {
         char input;
         cin >> input;
@@ -139,7 +170,7 @@ int main()
 
             default: cout << "Bad input" << endl; break;
         };
-    };
+    } while (menuCommand == 0);
     cin.ignore();
 
     //int shouldntWork = MenuCommand::MC_AddMovie;
@@ -177,7 +208,7 @@ int main()
     Movie movie; //= {0};
 
     //Get required Title
-    while (movie.Title == "")
+    do
     {
         cout << "Enter a title: ";
         getline(cin, movie.Title);
@@ -188,11 +219,12 @@ int main()
         if (movie.Title == "")
 
             cout << "ERROR: Title is required" << endl;
-    }
+    } while (movie.Title == "");
 
     //Get run length, at least 0 minutes
-    movie.RunLength = -1;        //not recommended but makes sure the user it prompted the first time around!
-    while (movie.RunLength < 0 || movie.RunLength > 1440)
+    //movie.RunLength = -1;        //not recommended but makes sure the user it prompted the first time around!
+    //while (movie.RunLength < 0 || movie.RunLength > 1440)
+    do
     {
         cout << "Enter run legth (in minutes): ";
         cin >> movie.RunLength;
@@ -223,7 +255,7 @@ int main()
             {
                 cout << "ERROR: Run length must be between 0 and 1440" << endl;
             };
-    }
+    } while (movie.RunLength < 0 || movie.RunLength > 1440);
 
         //The || removes the need for this extra else...
     //} else if (movie.RunLength > 1440)
@@ -233,7 +265,8 @@ int main()
     //    cout << "Enter run length (in minutes): ";
     //    cin >> movie.RunLength;
     
-    while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+    //while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+    do
     {
         cout << "Enter release year (1900+): ";
         cin >> movie.ReleaseYear;
@@ -242,7 +275,7 @@ int main()
         {
             cout << "ERROR: Release year must be between 1900 and 2100" << endl;
         };
-    }
+    } while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100);
 
     //  Get optional description
     cout << "Enter optional description: ";
@@ -390,7 +423,7 @@ int main()
     //int someIndex = 0
     //    for (;;) {}; // infinite loop !!! //can leave off parts of the expression, if there is no equation the update will infinitely check
 
-    };
+   
 
     //if (isClassic == 'Y' || isClassic == 'y')
     //    movie.IsClassic = true;
@@ -444,3 +477,12 @@ int main()
         cout << movie.Description << endl;
     cout << "------------" << endl;
 }
+
+// When Should we use which loops --- always ask yourself how many times you need to run the loop
+// 
+//            While                    Do-While                                    For
+//  s         0 or more                 1 or more                                  0 or more
+//  iter's    inf(++i or variable)      inf (++i or variable)                      fixed (initializer; test;)
+// Breaks     Yes                       Yes                                        Yes
+// post/pre    pre-test                 post-test                                  pre-test
+//
