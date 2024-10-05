@@ -5,6 +5,8 @@
 #include <iostream>
 #include <iomanip>
 
+using std::cout;    //1)
+using std::cin;     //2) Found that adding these fixes our "cout is ambiguous" error from class
 using namespace std;
 
 int main()
@@ -13,7 +15,7 @@ int main()
     cout << left << setw(10) << "Project" << "Loan Calculator\n" << setw(10) << "By:" << "Sean Hansen\n" << setw(10) << "Class:" << "COSC-1436-20005\n";
     cout << setw(30) << setfill('-') << "" << setfill(' ') << endl;
 
-    do
+    while(true)
     {
         char newLoanInput;
         bool newLoanBool;
@@ -22,6 +24,7 @@ int main()
         {
             cout << "Start a new loan calculation? (y/n): ";
             cin >> newLoanInput;
+            cout << endl;
         
             switch (newLoanInput)
             {
@@ -44,7 +47,7 @@ int main()
         double loanBalance = 0;
         do
         {
-            cout << "Input your initial loan amount (between 1 and 1000): ";
+            cout << "Initial loan amount (1 - 1000): ";
             cin >> loanBalance;
 
             if (loanBalance < 1 || loanBalance > 1000)
@@ -55,11 +58,11 @@ int main()
         double interestRate = 0;
         do
         {
-            cout << "Input your interest rate (between 1.0 and 100.0): ";
+            cout << "Interest rate percentage (between 1 - 100): ";
             cin >> interestRate;
 
             if (interestRate < 1.0 || interestRate > 100.0)
-                cout << "Error: Interest rate must be between 1.0 - 100.0\n";
+                cout << "Error: Interest rate must be between 1 and 100\n";
 
         } while (interestRate < 1.0 || interestRate > 100.0);
         interestRate /= 100;
@@ -67,11 +70,12 @@ int main()
         double monthlyPayment = 0;
         do
         {
-            cout << "Input your desired monthly payment (between 0 and your initial loan balance): ";
+            cout << "Monthly payment (0 - initial loan balance): ";
             cin >> monthlyPayment;
 
             if (monthlyPayment < 0 || monthlyPayment > loanBalance)
                 cout << "Error: Monthly payment must be within 0 and your initial loan balance\n";
+            cout << endl;
 
         } while (monthlyPayment < 0 || monthlyPayment > loanBalance);
 
@@ -104,9 +108,10 @@ int main()
 
             if (index == 0)
             {
-                cout << left << setw(7) << "Month" << setw(9) << "Balance" << setw(9) << "Payment" << setw(11) << "Interest" << "New Balance" << endl;
-                cout << setw(38) << setfill('-') << "" << setfill(' ') << endl;
-                cout << left << setw(7) << (index + 1) << "$ " << setw(9) << oldLoanBalance << "$ " << setw(9) << monthlyPayment - monthlyPayment << "$ " << setw(11) << monthlyInterest << "$ " << loanBalance << endl;
+                cout << fixed << setprecision(2);
+                cout << left << setw(7) << "Month" << setw(11) << "Balance" << setw(11) << "Payment" << setw(13) << "Interest" << "New Balance" << endl;
+                cout << setw(53) << setfill('-') << "" << setfill(' ') << endl;
+                cout << left << setw(7) << (index + 1) << "$ " << setw(9) << oldLoanBalance << "$ " << setw(9) << "0.00" << "$ " << setw(11) << monthlyInterest << "$ " << loanBalance << endl;
                 continue;
             } else
             {
@@ -116,12 +121,12 @@ int main()
 
             if (index == 11)
             {
-                cout << setw(38) << setfill('-') << "" << setfill(' ') << endl;
+                cout << setw(53) << setfill('-') << "" << setfill(' ') << endl;
                 cout << left << setw(18) << "Total" << "$ " << setw(9) << sumPayments << "$ " << sumInterest << endl;
                 cout << endl;
             };
         };
-    }while (true);
+    };
 
-    cout << "\nNow Closing Program...\n";
+    cout << "Now Closing Program...\n";
 };
