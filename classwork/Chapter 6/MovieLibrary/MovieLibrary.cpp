@@ -6,22 +6,28 @@ using namespace std;
 using std::cout;
 using std::cin;
 
+//functions = module that calculates a value
+//procedure = module that does something
+//subroutine = wrapper term for modules
+// 
+//c++ refers to all (modules) as functions ...
+//
+//
 
 struct Movie
 {
     string Title;
 
-    int RunLength;
+    int RunLength = 0;
 
     string Description;
 
-    int ReleaseYear;
+    int ReleaseYear = 0;
 
-    bool IsClassic;
+    bool IsClassic = 0;
 
     string Genre;
 };
-
 
 enum MenuCommand
 {   
@@ -31,7 +37,33 @@ enum MenuCommand
     ViewMovie,
 };
 
-int main()
+//// Function Definition
+// type identification ()
+// {
+//      statement*
+// }
+
+////Function Definition
+// decleration =    Declares existance of something & what it is (var decleration :: int input)
+//                  Used by compiler to recognize the use of the identifier
+//                  Must be declared before usage
+// 
+// definition =     what it does (made for the linker : point after the compiler ... makes troubleshooting difficult)
+//                  compilers just look for decleration not definitions, therefore the linker will be looking for the definition
+//                  (Variable : scope or point where var is defined) 
+//                  (Function : everything in the curlyg braces of a function)
+
+// Name functions as actions / verbs ... (get ... display ... call ...)
+//      Casing : Pascal Casing
+// 
+// Every function should have a Commented Header
+//      Versions
+//      Doxygen
+//      Microsoft (default) -- change this!
+//
+
+/// @brief Displays main menu
+void DisplayMenu()
 {
     cout << "Movie Library" << endl;
     cout << "---------------" << endl;
@@ -39,10 +71,30 @@ int main()
     cout << "E)dit Movie" << endl;
     cout << "D)elete Movie" << endl;
     cout << "V)iew Movie" << endl;
+}
+
+/// @brief Handles the menu selection
+void HandleMenu()
+{
+    //HACK: Fix this
+    MenuCommand menuCommand = static_cast<MenuCommand>(0);
+    switch (menuCommand)
+    {
+        case MenuCommand::AddMovie:
+        case MenuCommand::EditMovie:
+        case MenuCommand::DeleteMovie:
+        case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
+    };
+}
+
+int main()
+{
+    //Function call = id();
+    DisplayMenu();
 
     MenuCommand menuCommand = static_cast<MenuCommand>(0);
 
-    //get menu command
+    //// Get Input
     do     
     {
         char input;
@@ -67,18 +119,19 @@ int main()
     } while (menuCommand == 0);
     cin.ignore();
 
-    //cipher menu command
-    switch (menuCommand)
-    {
-        case MenuCommand::AddMovie:
-        case MenuCommand::EditMovie:
-        case MenuCommand::DeleteMovie:
-        case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
-    };
+    //// Handle menu command
+    HandleMenu();
+    //switch (menuCommand)
+    //{
+    //    case MenuCommand::AddMovie:
+    //    case MenuCommand::EditMovie:
+    //    case MenuCommand::DeleteMovie:
+    //    case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
+    //};
     
     Movie movie;
 
-    //get title
+    //// Get title
     do
     {
         cout << "Enter a title: ";
@@ -89,7 +142,7 @@ int main()
             cout << "ERROR: Title is required" << endl;
     } while (movie.Title == "");
 
-    //get run length
+    //// Get run length
     do
     {
         cout << "Enter run legth (in minutes): ";
@@ -101,7 +154,7 @@ int main()
             };
     } while (movie.RunLength < 0 || movie.RunLength > 1440);
 
-    //get year
+    //// Get year
     do
     {
         cout << "Enter release year (1900+): ";
@@ -113,12 +166,12 @@ int main()
         };
     } while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100);
 
-    //get optional description
+    //// Get optional description
     cout << "Enter optional description: ";
     cin.ignore();
     getline(cin, movie.Description);
 
-    //get isClassic
+    //// Get isClassic
     bool done = false;
     while (!done)
     {
@@ -142,7 +195,7 @@ int main()
     }
     cin.ignore();
 
-    //get genre
+    //// Get genre
     for (int index = 0; index < 5; ++index)
     {
         cout << "Enter optional genre " << (index + 1) << ": ";
@@ -155,7 +208,7 @@ int main()
         movie.Genre += genre + ", ";
     };
 
-    //display library
+    //// Display library
     cout << "------------" << endl;
     cout << movie.Title << " (" << movie.ReleaseYear << ")" << endl;
     cout << "Run Length (mins) " << movie.RunLength << endl;
