@@ -75,7 +75,6 @@ int main()
 
             if (monthlyPayment < 0 || monthlyPayment > loanBalance)
                 cout << "Error: Monthly payment must be within 0 and your initial loan balance\n";
-            cout << endl;
 
         } while (monthlyPayment < 0 || monthlyPayment > loanBalance);
 

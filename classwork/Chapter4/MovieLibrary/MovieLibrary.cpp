@@ -3,6 +3,8 @@
 #include<string>
 
 using namespace std;
+using std::cout;
+using std::cin;
 
 //Movie: Title, Actors, Run length, Description, Genres, Director(s), Release Year, MPAA Rating
 struct Movie
@@ -49,25 +51,25 @@ int main()
 {
 
     //nested loop demo
-    int iterations = 0;
-    for (int i = 0; i < 100; ++i)
-    {
-        }
-        for (int j = 0; j < 100; ++j)
-        {
-            ++iterations; //will execute 1000 times if not careful
-            cout << i << ", " << j << " = " << iterations << endl;
+    //int iterations = 0;
+    //for (int i = 0; i < 100; ++i)
+    //{
+    //    }
+    //    for (int j = 0; j < 100; ++j)
+    //    {
+    //        ++iterations; //will execute 1000 times if not careful
+    //        cout << i << ", " << j << " = " << iterations << endl;
 
-            if (iterations % 100 == 0) // modulus is remainder ... 100 has no remainder therefore ....
-            {
-                char choice;
-                cout << "do you want to give up?";
-                cin >> choice;
-                if (choice == 'Y' || choice == 'y')
-                    break;      //this break would only take you out of the current nested loop, not all
-        };
-        cout << "Total iterations = " << iterations << endl;
-    }
+    //        if (iterations % 100 == 0) // modulus is remainder ... 100 has no remainder therefore ....
+    //        {
+    //            char choice;
+    //            cout << "do you want to give up?";
+    //            cin >> choice;
+    //            if (choice == 'Y' || choice == 'y')
+    //                break;      //this break would only take you out of the current nested loop, not all
+    //    };
+    //    cout << "Total iterations = " << iterations << endl;
+    //}
         
     //Decision making - IF statement
     // if-statement :: 
