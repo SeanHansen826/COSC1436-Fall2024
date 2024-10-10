@@ -72,12 +72,11 @@ void CalculateDistance(bool measurementUnit, int givenSecond)
 /// @param givenSecond used to calculate each seconds distance traveled
 /// @param distanceFallen used distance fallen given the particular second
 /// @param used for input time fallen
-void DisplayTable(bool measurementUnit, /*int givenSecond*/, double distanceFallen, int fallingTime)
+void DisplayTable(bool measurementUnit, /*int givenSecond*/ double distanceFallen, int fallingTime)
 {
     for (int index = 0; index < fallingTime; index++)        //needs revision, cannot call into another function yet
     {
-        int givenSecond;
-        //CalculateDistance();    //when (givenSecond = index + 1)
+        //CalculateDistance(givenSecond = index + 1);    //when (givenSecond = index + 1)
 
         if (index == 0)
             cout << endl;
