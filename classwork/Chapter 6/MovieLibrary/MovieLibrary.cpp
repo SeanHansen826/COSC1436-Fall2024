@@ -31,10 +31,10 @@ struct Movie
 
 enum MenuCommand
 {   
-    AddMovie = 1,
-    EditMovie,
-    DeleteMovie,
-    ViewMovie,
+    MC_AddMovie = 1,
+    MC_EditMovie,
+    MC_DeleteMovie,
+    MC_ViewMovie,
 };
 
 //// Function Definition
@@ -62,73 +62,12 @@ enum MenuCommand
 //      Microsoft (default) -- change this!
 //
 
-/// @brief Displays main menu
-void DisplayMenu()
+MenuCommand g_menuCommand = static_cast<MenuCommand>(0);    //BIG NO-NO, GLOBAL VARIABLE CHEAT
+Movie g_movie;                                              //BIG NO-NO, GLOBAL VARIABLE CHEAT
+
+/// @brief Adds the movie
+void AddMovie()
 {
-    cout << "Movie Library" << endl;
-    cout << "---------------" << endl;
-    cout << "A)dd Movie" << endl;
-    cout << "E)dit Movie" << endl;
-    cout << "D)elete Movie" << endl;
-    cout << "V)iew Movie" << endl;
-}
-
-/// @brief Handles the menu selection
-void HandleMenu()
-{
-    //HACK: Fix this
-    MenuCommand menuCommand = static_cast<MenuCommand>(0);
-    switch (menuCommand)
-    {
-        case MenuCommand::AddMovie:
-        case MenuCommand::EditMovie:
-        case MenuCommand::DeleteMovie:
-        case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
-    };
-}
-
-int main()
-{
-    //Function call = id();
-    DisplayMenu();
-
-    MenuCommand menuCommand = static_cast<MenuCommand>(0);
-
-    //// Get Input
-    do     
-    {
-        char input;
-        cin >> input;
-
-        switch (input)
-        {
-            case 'A':
-            case 'a': menuCommand = MenuCommand::AddMovie; break;
-
-            case 'E':
-            case 'e': menuCommand = MenuCommand::EditMovie; break;
-
-            case 'D':
-            case 'd': menuCommand = MenuCommand::DeleteMovie; break;
-
-            case 'V':
-            case 'v': menuCommand = MenuCommand::ViewMovie; break;
-
-            default: cout << "Bad input" << endl; break;
-        };
-    } while (menuCommand == 0);
-    cin.ignore();
-
-    //// Handle menu command
-    HandleMenu();
-    //switch (menuCommand)
-    //{
-    //    case MenuCommand::AddMovie:
-    //    case MenuCommand::EditMovie:
-    //    case MenuCommand::DeleteMovie:
-    //    case MenuCommand::ViewMovie: cout << "Not Implemented" << endl; break;
-    //};
-    
     Movie movie;
 
     //// Get title
@@ -148,10 +87,10 @@ int main()
         cout << "Enter run legth (in minutes): ";
         cin >> movie.RunLength;
 
-            if (movie.RunLength < 0 || movie.RunLength > 1440)
-            {
-                cout << "ERROR: Run length must be between 0 and 1440" << endl;
-            };
+        if (movie.RunLength < 0 || movie.RunLength > 1440)
+        {
+            cout << "ERROR: Run length must be between 0 and 1440" << endl;
+        };
     } while (movie.RunLength < 0 || movie.RunLength > 1440);
 
     //// Get year
@@ -181,10 +120,10 @@ int main()
 
         switch (isClassic)
         {
-            case 'Y': 
+            case 'Y':
             case 'y': movie.IsClassic = true;  done = true; break;
 
-            case 'N': 
+            case 'N':
             case 'n': movie.IsClassic = false; done = true; break;
 
             default:
@@ -208,15 +147,101 @@ int main()
         movie.Genre += genre + ", ";
     };
 
-    //// Display library
+    //HACK: Don't do this
+    g_movie = movie;
+};
+
+/// @brief Edits the movie
+void EditMovie()
+{
+    cout << "EditMovie";
+};
+
+/// @brief Deletes the movie
+void DeleteMovie()
+{
+    cout << "DeleteMovie";
+};
+
+/// @brief Views the movie
+void ViewMovie ( Movie movie )
+{
+        //// Display library
     cout << "------------" << endl;
     cout << movie.Title << " (" << movie.ReleaseYear << ")" << endl;
     cout << "Run Length (mins) " << movie.RunLength << endl;
-    
+
     cout << "Is Classic? " << (movie.IsClassic ? "Yes" : "No") << endl;
     if (movie.Genre != "")
         cout << "Genre(s) " << movie.Genre << endl;
     if (movie.Description != "")
         cout << movie.Description << endl;
     cout << "------------" << endl;
+};
+
+/// @brief Displays main menu
+void DisplayMenu()
+{
+    cout << "Movie Library" << endl;
+    cout << "--------------" << endl;
+    cout << "A)dd Movie" << endl;
+    cout << "E)dit Movie" << endl;
+    cout << "D)elete Movie" << endl;
+    cout << "V)iew Movie" << endl;
+
+    MenuCommand menuCommand = static_cast<MenuCommand>(0);
+    do
+    {
+        char input;
+        cin >> input;
+
+        switch (input)
+        {
+            case 'A':
+            case 'a': menuCommand = MenuCommand::MC_AddMovie; break;
+                                                 
+            case 'E':                            
+            case 'e': menuCommand = MenuCommand::MC_EditMovie; break;
+                                                 
+            case 'D':                            
+            case 'd': menuCommand = MenuCommand::MC_DeleteMovie; break;
+                                                 
+            case 'V':                            
+            case 'v': menuCommand = MenuCommand::MC_ViewMovie; break;
+
+            default: cout << "Bad input" << endl; break;
+        };
+    } while (menuCommand == 0);
+    cin.ignore();
+
+    //HACK
+    g_menuCommand = menuCommand;
+}
+
+//Parameter ::= data used inside function
+
+/// @brief Handles the menu selection
+/// @param menuCommand The command to handle
+void HandleMenu(MenuCommand menuCommand)
+{
+    switch (menuCommand)
+    {
+        case MenuCommand::MC_AddMovie: AddMovie(); break;
+        case MenuCommand::MC_EditMovie: EditMovie(); break;
+        case MenuCommand::MC_DeleteMovie: DeleteMovie(); break;
+        case MenuCommand::MC_ViewMovie: ViewMovie(g_movie); break;     //HACK
+    };
+}
+
+int main()
+{
+    do
+    {
+    //Function call = id();
+        DisplayMenu();
+
+        //argument ::= data (expression) passed to a function
+        //using the variable name works as an expression ... passes variable assignment to function (right side of =)
+        HandleMenu(g_menuCommand);      //HACK
+    } while (true);
 }
