@@ -19,10 +19,9 @@ void DisplayHeader()
 };
 
 /// @brief PromptInput Get user input for falling time
-int PromptInput()
+void PromptInput()  //needs Meters or Feet ...
 {
     int fallingTime;
-
     do
     {
         cout << "Input time fallen (1-60 seconds): ";
@@ -33,21 +32,41 @@ int PromptInput()
             cout << "ERROR: Falling Time must be between 1 and 60 seconds.\n";
         };
     } while (fallingTime < 1 || fallingTime > 60);
+
+    cout << endl;
 };
 
-double CalculateFallingDistance()
+/// @brief CalculateFallingDistance Calculates the distance fallen over a given second
+/// @param givenSecond the second for which you would like to calculate the distance traveled
+/// @return distanceFallen returns the value calculated for distanceFallen back to CalculateFallingDistance
+double CalculateFallingDistance( int givenSecond  )  //tells the call variable to assign the argument to the parameter.
 {
     double const gravity = 9.8;
-    double distanceFallen = (gravity / 2) * pow(fallingTime, 2);
+    double distanceFallen = (gravity / 2) * pow(givenSecond, 2);;
 
-    return distanceFallen;
+    return distanceFallen; //gives CalculateFallingDistance a value of distanceFallen
 }
+
+/// @brief DisplayTable Displays the table for distance traveled over given amount of seconds
+void DisplayTable()
+{
+    cout << fixed << setprecision(2);
+    cout << setw(10) << "Seconds" << "Distance (m)\n";
+    cout << setw(22) << setfill('-') << "" << setfill(' ') << endl;
+
+    for (int index = 0; index < 10; ++index)        //still needs to get the falling distane into the function...
+    {
+        double distanceForGivenSecond = CalculateFallingDistance(index + 1);
+
+        cout << setw(10) << index + 1 << distanceForGivenSecond << " m" << endl;
+    };
+};
 
 int main()
 {
     DisplayHeader(); 
     PromptInput();
-    CalculateFallingDistance();
+    DisplayTable();
 };
 
 
