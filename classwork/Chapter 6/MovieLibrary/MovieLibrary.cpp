@@ -64,10 +64,9 @@ enum MenuCommand
 
 MenuCommand g_menuCommand = static_cast<MenuCommand>(0);    //BIG NO-NO, GLOBAL VARIABLE CHEAT
 Movie g_movie;                                              //BIG NO-NO, GLOBAL VARIABLE CHEAT
-/// @brief Reads a string from input
-/// @param message Message to display
-/// @return Input from a user
-string ReadString( string message )
+
+
+string ReadString(string message, bool isRequired)
 {
     string input;
     do
@@ -75,12 +74,20 @@ string ReadString( string message )
         cout << message;
         getline(cin, input);
 
-        if (input == "")
+        if (isRequired && input == "")
             cout << "ERROR: Value is required" << endl;
-    } while (input == "");
+    } while (isRequired && input == "");
 
     return input;
 }
+
+/// @brief Reads a string from input
+/// @param message Message to display
+/// @return Input from user
+string ReadString(string message)
+{
+    return ReadString(message, false);
+};
 
 /// @brief Adds the movie
 void AddMovie()
@@ -115,6 +122,7 @@ void AddMovie()
     } while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100);
 
     //// Get optional description
+    cin.ignore();
     movie.Description = ReadString("Enter optional description: ");
 
     //// Get isClassic
@@ -144,10 +152,11 @@ void AddMovie()
     //// Get genre
     for (int index = 0; index < 5; ++index)
     {
-        cout << "Enter optional genre " << (index + 1) << ": ";
+        string genre = ReadString("Enter optional genre ");
+        //cout << "Enter optional genre " << (index + 1) << ": ";
 
-        string genre;
-        getline(cin, genre);
+        //string genre;
+        //getline(cin, genre);
         if (genre == "")
             break;
 
