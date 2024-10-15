@@ -64,6 +64,23 @@ enum MenuCommand
 
 MenuCommand g_menuCommand = static_cast<MenuCommand>(0);    //BIG NO-NO, GLOBAL VARIABLE CHEAT
 Movie g_movie;                                              //BIG NO-NO, GLOBAL VARIABLE CHEAT
+/// @brief Reads a string from input
+/// @param message Message to display
+/// @return Input from a user
+string ReadString( string message )
+{
+    string input;
+    do
+    {
+        cout << message;
+        getline(cin, input);
+
+        if (input == "")
+            cout << "ERROR: Value is required" << endl;
+    } while (input == "");
+
+    return input;
+}
 
 /// @brief Adds the movie
 void AddMovie()
@@ -71,15 +88,7 @@ void AddMovie()
     Movie movie;
 
     //// Get title
-    do
-    {
-        cout << "Enter a title: ";
-        getline(cin, movie.Title);
-
-        if (movie.Title == "")
-
-            cout << "ERROR: Title is required" << endl;
-    } while (movie.Title == "");
+    movie.Title = ReadString("Enter a title: ")
 
     //// Get run length
     do
@@ -220,6 +229,11 @@ void DisplayMenu()
 
 //Parameter ::= data used inside function
 
+//  parameter kind  (pass-by value)
+//      input = read in function (can write but will have no impact on caller)  -- any valid expression/type -- creates a copy of the argument being given
+//      output = writes, caller has no input                                    -- return type(s)            --
+//      input/output =
+//
 /// @brief Handles the menu selection
 /// @param menuCommand The command to handle
 void HandleMenu(MenuCommand menuCommand)
