@@ -1,6 +1,7 @@
 #include <iostream>
 #include<iomanip>
 #include<string>
+#include "Terminal.h"
 
 using namespace std;
 using std::cout;
@@ -63,31 +64,34 @@ enum MenuCommand
 //
 
 MenuCommand g_menuCommand = static_cast<MenuCommand>(0);    //BIG NO-NO, GLOBAL VARIABLE CHEAT
-Movie g_movie;                                              //BIG NO-NO, GLOBAL VARIABLE CHEAT
+Movie g_movie;
+
+//Function Prototypes (function forwarding) Only use if needed 
+int ReadInt(string, int, int);
+string ReadString(string, bool);
+void AddMovie();
+void DeleteMovie();
+void EditMovie();
+void ViewMovie(Movie);
+
+void DisplayMenu();
+void HandleMenu(MenuCommand);
 
 
-string ReadString(string message, bool isRequired)
+
+int main()
 {
-    string input;
     do
     {
-        cout << message;
-        getline(cin, input);
+        DisplayMenu();
 
-        if (isRequired && input == "")
-            cout << "ERROR: Value is required" << endl;
-    } while (isRequired && input == "");
-
-    return input;
+        //argument ::= data (expression) passed to a function
+        //using the variable name works as an expression ... passes variable assignment to function (right side of =)
+        HandleMenu(g_menuCommand);      //HACK
+    } while (true);
 }
 
-/// @brief Reads a string from input
-/// @param message Message to display
-/// @return Input from user
-string ReadString(string message)
-{
-    return ReadString(message, false);
-};
+
 
 /// @brief Adds the movie
 void AddMovie()
@@ -98,28 +102,30 @@ void AddMovie()
     movie.Title = ReadString("Enter a title: ");
 
     //// Get run length
-    do
-    {
-        cout << "Enter run legth (in minutes): ";
-        cin >> movie.RunLength;
-
-        if (movie.RunLength < 0 || movie.RunLength > 1440)
-        {
-            cout << "ERROR: Run length must be between 0 and 1440" << endl;
-        };
-    } while (movie.RunLength < 0 || movie.RunLength > 1440);
+    movie.RunLength = ReadInt("Enter run length (in minutes): ", 0, 1440);
+    //do
+    //{
+    //    cout << "Enter run legth (in minutes): ";
+    //    cin >> movie.RunLength;
+    //
+    //    if (movie.RunLength < 0 || movie.RunLength > 1440)
+    //    {
+    //        cout << "ERROR: Run length must be between 0 and 1440" << endl;
+    //    };
+    //} while (movie.RunLength < 0 || movie.RunLength > 1440);
 
     //// Get year
-    do
-    {
-        cout << "Enter release year (1900+): ";
-        cin >> movie.ReleaseYear;
-
-        if (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
-        {
-            cout << "ERROR: Release year must be between 1900 and 2100" << endl;
-        };
-    } while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100);
+    movie.ReleaseYear = ReadInt("Enter release year (1900+): ", 1900, 2100);
+    //do
+    //{
+    //    cout << "Enter release year (1900+): ";
+    //    cin >> movie.ReleaseYear;
+    //
+    //    if (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+    //    {
+    //        cout << "ERROR: Release year must be between 1900 and 2100" << endl;
+    //    };
+    //} while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100);
 
     //// Get optional description
     cin.ignore();
@@ -180,7 +186,7 @@ void DeleteMovie()
 };
 
 /// @brief Views the movie
-void ViewMovie ( Movie movie )
+void ViewMovie(Movie movie)
 {
         //// Display library
     cout << "------------" << endl;
@@ -215,14 +221,14 @@ void DisplayMenu()
         {
             case 'A':
             case 'a': menuCommand = MenuCommand::MC_AddMovie; break;
-                                                 
-            case 'E':                            
+
+            case 'E':
             case 'e': menuCommand = MenuCommand::MC_EditMovie; break;
-                                                 
-            case 'D':                            
+
+            case 'D':
             case 'd': menuCommand = MenuCommand::MC_DeleteMovie; break;
-                                                 
-            case 'V':                            
+
+            case 'V':
             case 'v': menuCommand = MenuCommand::MC_ViewMovie; break;
 
             default: cout << "Bad input" << endl; break;
@@ -252,17 +258,4 @@ void HandleMenu(MenuCommand menuCommand)
         case MenuCommand::MC_DeleteMovie: DeleteMovie(); break;
         case MenuCommand::MC_ViewMovie: ViewMovie(g_movie); break;     //HACK
     };
-}
-
-int main()
-{
-    do
-    {
-    //Function call = id();
-        DisplayMenu();
-
-        //argument ::= data (expression) passed to a function
-        //using the variable name works as an expression ... passes variable assignment to function (right side of =)
-        HandleMenu(g_menuCommand);      //HACK
-    } while (true);
 }
