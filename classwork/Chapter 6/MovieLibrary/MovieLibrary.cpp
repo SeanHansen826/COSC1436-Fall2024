@@ -88,7 +88,7 @@ void AddMovie()
     Movie movie;
 
     //// Get title
-    movie.Title = ReadString("Enter a title: ")
+    movie.Title = ReadString("Enter a title: ");
 
     //// Get run length
     do
@@ -115,9 +115,7 @@ void AddMovie()
     } while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100);
 
     //// Get optional description
-    cout << "Enter optional description: ";
-    cin.ignore();
-    getline(cin, movie.Description);
+    movie.Description = ReadString("Enter optional description: ");
 
     //// Get isClassic
     bool done = false;
