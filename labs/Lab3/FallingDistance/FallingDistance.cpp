@@ -25,7 +25,7 @@ void DisplayHeader()
 };
 
 /// @brief PromptInput Get user input for falling time
-int PromptInput ()
+int PromptInput ()      //break this up into two seperate functions, re-consider the naming!
 {
     int fallingTime;
     do
@@ -48,7 +48,7 @@ int PromptInput ()
         switch (InputMeasurementUnit)
         {
             case 'M':
-            case 'm': measurementUnit = false; done = true; break;
+            case 'm': measurementUnit = false ; done = true; break;
 
             case 'F':
             case 'f': measurementUnit = true; done = true; break;
