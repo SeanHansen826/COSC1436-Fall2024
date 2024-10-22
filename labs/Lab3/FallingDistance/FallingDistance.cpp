@@ -25,7 +25,7 @@ void DisplayHeader()
 };
 
 /// @brief PromptInput Get user input for falling time
-int PromptInput ()      //break this up into two seperate functions, re-consider the naming!
+int PromptFallingTime ()      //break this up into two seperate functions, re-consider the naming!
 {
     int fallingTime;
     do
@@ -39,7 +39,12 @@ int PromptInput ()      //break this up into two seperate functions, re-consider
         };
     } while (fallingTime < 1 || fallingTime > 60);
 
-    char InputMeasurementUnit; bool measurementUnit; bool done = false;
+    return fallingTime;
+};
+
+bool PromptMeasurementUnit ()
+{
+        char InputMeasurementUnit; bool measurementUnit ; bool done = false;
     do
     {
         cout << "Would you like to use feet or meters (f/m)? ";
@@ -48,7 +53,7 @@ int PromptInput ()      //break this up into two seperate functions, re-consider
         switch (InputMeasurementUnit)
         {
             case 'M':
-            case 'm': measurementUnit = false ; done = true; break;
+            case 'm': measurementUnit = false; done = true; break;
 
             case 'F':
             case 'f': measurementUnit = true; done = true; break;
@@ -59,8 +64,8 @@ int PromptInput ()      //break this up into two seperate functions, re-consider
     } while (!done);
     cout << endl;
 
-    return fallingTime;
-};
+    return measurementUnit;
+}
 
 /// @brief CalculateFallingDistance Calculates the distance fallen over a given second
 /// @param givenSecond the second for which you would like to calculate the distance traveled
@@ -75,15 +80,13 @@ double CalculateFallingDistance( int givenSecond  )  //tells the call variable t
 
 /// @brief DisplayTable Displays the table for distance traveled over given amount of seconds
 /// @param fallingTime allows us to calculate the given second's distance traveled up to the total time traveled
-void DisplayTable( int fallingTime )
+void DisplayTable( int fallingTime, bool measurementUnit)
 {
-    bool measurementUnit = false;
-
     cout << fixed << setprecision(2);
     cout << setw(10) << "Seconds" << "Distance\n";
     cout << setw(22) << setfill('-') << "" << setfill(' ') << endl;
 
-    if (measurementUnit == false)
+    if (measurementUnit = false)
     {
         for (int index = 0; index < fallingTime; ++index)
         {
@@ -91,7 +94,7 @@ void DisplayTable( int fallingTime )
             cout << setw(10) << index + 1 << distanceForGivenSecond << " m" << endl;
         }
     };
-
+    
     if (measurementUnit == true)
     {
         for (int index = 0; index < fallingTime; ++index)
@@ -107,9 +110,10 @@ int main()
 {
     DisplayHeader();
 
-    int fallingTime = PromptInput();
+    int fallingTime = PromptFallingTime();
+    bool measurementUnit = PromptMeasurementUnit();
 
-    DisplayTable( fallingTime );
+    DisplayTable( fallingTime, measurementUnit);
 };
 
 
