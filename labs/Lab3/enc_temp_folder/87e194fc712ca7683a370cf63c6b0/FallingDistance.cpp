@@ -96,7 +96,7 @@ void DisplayTable( int fallingTime, bool measurementUnit )
             double distanceForGivenSecond = CalculateFallingDistance(index);
             cout << setw(10) << index << distanceForGivenSecond << " m" << endl;
         }
-    } else if (measurementUnit == true);        //always runs ( only when selecting meters ... )
+    } else if (measurementUnit == true);
     {
         for (int index = 1; index <= fallingTime; ++index)
         {
