@@ -16,7 +16,7 @@ using std::cin;
 //  Function Signature -- function name + the argument types            ***QUIZ***
 
 
-//
+//I
 
 /// @brief Reads an integer from console
 /// @param message Message to display
@@ -32,7 +32,7 @@ int ReadInt(string message)
     cin >> value;
 
     return value;
-}
+};
 
 int ReadInt(string message, int minValue, int maxValue)
 {
@@ -48,22 +48,62 @@ int ReadInt(string message, int minValue, int maxValue)
     } while (value < minValue || value > maxValue);
 
     return value;
-}
+};
 
 int ReadInt(string message, int minValue)
 {
     return ReadInt(message, minValue, INT32_MAX);        //INT32_MAX provides a value for the parameter that we're not needing, basically a placeholder
+};
+
+struct Employee
+{
+    int Id;
+    string Name;
+
+    int YearsOfService;
+    double PayRate;
+};
+
+void Display(Employee employee)
+{
+    cout << employee.Name << endl;
+    cout << employee.Id << endl;
+    cout << "Years of Service: " << employee.YearsOfService << endl;
+    cout << "Pay Rate: $" << employee.PayRate << endl;
+
+    employee.YearsOfService *= 2;
+};
+
+void GivePayRaise(Employee& employee)
+{
+    //If Years > 3, payrate + $ 5
+    //If Years > 5, payrate + $ 10
+
+    if (employee.YearsOfService > 3)
+        employee.PayRate += 5;
+    else if (employee.YearsOfService > 5)
+        employee.PayRate += 10;
 }
 
 int main()
 {
 
-    int value = ReadInt ( "Enter a value between 1 - 10", 1, 10 );
+    //int value = ReadInt ( "Enter a value between 1 - 10", 1, 10 );
 
-    int positive = ReadInt("Enter a positive Number: ", 0);
+    //int positive = ReadInt("Enter a positive Number: ", 0);
 
-    int anyValue = ReadInt("Enter a number: ");
+    //int anyValue = ReadInt("Enter a number: ");
 
-    int test = ReadInt("a message", 10, 50);
+    //int test = ReadInt("a message", 10, 50);
+
+    Employee employee;
+    employee.Id = 10;
+    employee.Name = "Bob";
+    employee.YearsOfService = 10;
+    employee.PayRate = 20.5;
+
+    Display(employee);
+    GivePayRaise(employee);
+    Display(employee);
 }
 
