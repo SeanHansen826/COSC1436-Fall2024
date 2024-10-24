@@ -74,7 +74,7 @@ void Display(Employee employee)
     employee.YearsOfService *= 2;
 };
 
-void GivePayRaise(Employee& employee)
+void GivePayRaise(Employee& employee)       //pass by ref usefule with struct!
 {
     //If Years > 3, payrate + $ 5
     //If Years > 5, payrate + $ 10
