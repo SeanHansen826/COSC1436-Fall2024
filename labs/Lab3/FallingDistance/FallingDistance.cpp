@@ -89,14 +89,14 @@ void DisplayTable( int fallingTime, bool measurementUnit )
     cout << setw(10) << "Seconds" << "Distance\n";
     cout << setw(22) << setfill('-') << "" << setfill(' ') << endl;
 
-    if (measurementUnit == false)
+    if (measurementUnit != true)
     {
         for (int index = 1; index <= fallingTime; ++index)
         {
             double distanceForGivenSecond = CalculateFallingDistance(index);
             cout << setw(10) << index << distanceForGivenSecond << " m" << endl;
         }
-    } else if (measurementUnit == true);        //always runs ( only when selecting meters ... )
+    }else if (measurementUnit == true)       //always runs ( only when selecting meters ... )
     {
         for (int index = 1; index <= fallingTime; ++index)
         {
