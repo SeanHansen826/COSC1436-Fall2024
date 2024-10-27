@@ -296,9 +296,9 @@ int main()
         //      Else statement
         //          only use when you need to make a choice
         //if (isClassic == 'Y')
-            //movie.IsClassic = true;
+        //    movie.IsClassic = true;
         //else
-            //movie.IsClassic = false;
+        //    movie.IsClassic = false;
         //  If Else If ... if (condition 1)
         //                      statement 1
         //                 else if (condition 2)
@@ -306,15 +306,17 @@ int main()
         //                  else if etc. etc. etc.
         //  This is useful to get out of the If command group once it's come to a decision already, not running irrelevant code.
 
-    /*    if (isClassic == 'Y')
+        if (isClassic == 'Y')
+        {
             movie.IsClassic = true;
+        }
         else if (isClassic == 'y')
             movie.IsClassic = false;
         else if (isClassic == 'N')
             movie.IsClassic = true;
         else if (isClassic == 'n')
             movie.IsClassic = false;
-        else  */                              //this last line is meant to handle anything other than the described inputs ... aka "t" "f" ...
+        else                                //this last line is meant to handle anything other than the described inputs ... aka "t" "f" ...
 
         //Using the Logical operators we now reduced the lines of code and computation time.
 
