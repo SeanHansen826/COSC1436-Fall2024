@@ -78,7 +78,7 @@ double CalculateFallingDistance( int givenSecond  )  //tells the call variable t
 /// @brief DisplayTable Displays the table for distance traveled per given amount of seconds
 /// @param fallingTime takes total length of time fallen
 /// @param measurementUnit unit of measurement required
-double DisplayTable( int fallingTime, bool measurementUnit, double distanceInFeet)
+void DisplayTable( int fallingTime, bool measurementUnit )
 {
     cout << fixed << setprecision(2);
     cout << setw(10) << "Seconds" << "Distance\n";
@@ -88,35 +88,19 @@ double DisplayTable( int fallingTime, bool measurementUnit, double distanceInFee
     {
         for (int index = 1; index <= fallingTime; ++index)
         {
-            double distanceForGivenSecond = CalculateFallingDistance( index );
+            double distanceForGivenSecond = CalculateFallingDistance(index);
             cout << setw(10) << index << distanceForGivenSecond << " m" << endl;
-        }
-        return 0;
-    }
-    else if (measurementUnit == true)
+        };
+    }else if (measurementUnit == true)
     {
         for (int index = 1; index <= fallingTime; ++index)
         {
-            double distanceForGivenSecond = CalculateFallingDistance( index );
-            distanceInFeet = ConvertMetersToFeet();
-            cout << setw(10) << index << distanceInFeet << " f" << endl;
-
-            return distanceForGivenSecond;
+            double distanceForGivenSecond = CalculateFallingDistance(index);
+            distanceForGivenSecond *= 3.28084;
+            cout << setw(10) << index << distanceForGivenSecond << " f" << endl;
         }
-    }
+    };
 };
-
-double ConvertMetersToFeet()
-{
-    double distanceInFeet;
-    int fallingTime = PromptFallingTime ();
-    bool measurementUnit = PromptMeasurementUnit ();
-    double fallingDistanceInMeters = DisplayTable ( fallingTime, measurementUnit, distanceInFeet );
-    fallingDistanceInMeters *= 3.28084;
-
-    return fallingDistanceInMeters;
-}
-
 
 int main()
 {
@@ -124,7 +108,6 @@ int main()
 
     int fallingTime = PromptFallingTime ();
     bool measurementUnit = PromptMeasurementUnit ();
-    double distanceInFeet = ConvertMetersToFeet();
 
-    DisplayTable ( fallingTime, measurementUnit, distanceInFeet );
+    DisplayTable ( fallingTime, measurementUnit );
 };
