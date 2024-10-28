@@ -20,7 +20,7 @@ void DisplayHeader()
 
 /// @brief PromptInput Get user input for falling time
 /// @return Returns value input for total fallingTime
-int PromptFallingTime ()
+int PromptFallingTime()
 {
     int fallingTime;
     do
@@ -39,9 +39,9 @@ int PromptFallingTime ()
 
 /// @brief Prompts input for measurementUnit (feet || meters ? true : false)
 /// @return returns measurementUnit of choice
-bool PromptMeasurementUnit ()
+bool PromptMeasurementUnit()
 {
-    char InputMeasurementUnit; bool measurementUnit ; bool done = false;
+    char InputMeasurementUnit; bool measurementUnit; bool done = false;
 
     do
     {
@@ -62,18 +62,27 @@ bool PromptMeasurementUnit ()
     } while (!done);
 
     return measurementUnit;
-}
+};
 
 /// @brief CalculateFallingDistance Calculates the distance fallen over a given second
 /// @param givenSecond the second for which you would like to calculate the distance traveled
 /// @return distanceFallen returns the value calculated for distanceFallen back to CalculateFallingDistance
-double CalculateFallingDistance( int givenSecond  )  //tells the call variable to assign the argument to the parameter.
+double CalculateFallingDistance(int givenSecond)
 {
     double const gravity = 9.8;
     double distanceFallen = (gravity / 2) * pow(givenSecond, 2);;
 
     return distanceFallen;
-}
+};
+
+/// @brief Converts answer in meters into feet
+/// @param distanceForGivenSecond the distance for a given second in meters
+/// @return returns the value converted to feet
+double ConvertAnswerToFeet(double distanceForGivenSecond)
+{
+    distanceForGivenSecond *= 3.28084;
+    return distanceForGivenSecond;
+};
 
 /// @brief DisplayTable Displays the table for distance traveled per given amount of seconds
 /// @param fallingTime takes total length of time fallen
@@ -91,23 +100,23 @@ void DisplayTable( int fallingTime, bool measurementUnit )
             double distanceForGivenSecond = CalculateFallingDistance(index);
             cout << setw(10) << index << distanceForGivenSecond << " m" << endl;
         };
-    }else if (measurementUnit == true)
+    } else if (measurementUnit == true)
     {
         for (int index = 1; index <= fallingTime; ++index)
         {
             double distanceForGivenSecond = CalculateFallingDistance(index);
-            distanceForGivenSecond *= 3.28084;
-            cout << setw(10) << index << distanceForGivenSecond << " f" << endl;
+            double distanceForGivenSecondInFeet = ConvertAnswerToFeet( distanceForGivenSecond );
+            cout << setw(10) << index << distanceForGivenSecondInFeet << " f" << endl;
         }
-    };
+    }
 };
 
 int main()
 {
     DisplayHeader ();
 
-    int fallingTime = PromptFallingTime ();
-    bool measurementUnit = PromptMeasurementUnit ();
+    int fallingTime = PromptFallingTime();
+    bool measurementUnit = PromptMeasurementUnit();
 
-    DisplayTable ( fallingTime, measurementUnit );
+    DisplayTable( fallingTime, measurementUnit );
 };
