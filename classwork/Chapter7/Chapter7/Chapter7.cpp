@@ -69,7 +69,65 @@ void TestPassByReference()
 
 //scalar values (variables, structs... only store one variable)
 
+void GradeArrayDemo()
+{
+    const int MaxGrades = 20;
+    double dummyValue2 = -1;
+    int grades[MaxGrades];
+    double dummyValue = 0;
+
+    int estimatedMaxArraySize = //size of array / size of element
+        sizeof(grades) / sizeof(int);
+
+    int count = 0;
+    for (int index = 0; index < MaxGrades; ++index)//++count)        //count gets +1 each time, not likely but useful
+    {
+        cout << "Enter a grade: ";
+        cin >> grades[index];
+        //grades[index] = 100;                            //sets each element in the array to 100
+
+        if (grades[index] <= 0)
+            break;
+
+        ++count;            //increases the element in array counted each time a value is input
+    };
+
+    for (int index = 0; index < count; ++index)     //change condition to however many values were used! (index < count)
+    {
+        cout << grades[index] << endl;
+    };
+
+    int indexToChange;
+    do
+    {
+        cout << "Enter the index of the grade to change: ";
+        cin >> indexToChange;
+
+    } while (indexToChange < 0 || indexToChange >= MaxGrades);
+
+
+    int newGrade;
+    cout << "Enter the new grade: ";
+    cin >> newGrade;
+
+    grades[indexToChange] = newGrade;
+}
+
+void InitArrayDemo()
+{
+    const int MaxRates = 100;
+    double payRates[MaxRates] = {0};    //zero initialize array
+
+//    for (int index = 0; index < MaxRates; ++index)
+//        payRates[index] = 0;           //zero initialize array
+}
+
 int main()
+{
+    InitArrayDemo();
+}
+
+void NameArrayDemo()
 {
     //Array -- set of related data
 
@@ -81,7 +139,7 @@ int main()
 
     //must be a compile time constant
     const int MaxStudents = 100;
-    string students [MaxStudents];      //set as max amount and const, so it is a compile time const. (only available to primitives)
+    string students [MaxStudents];      //set as max amount and const, so it is a compile time const. (only available to primitives)        //use this for lab!
 
 
     //Store roster of students
