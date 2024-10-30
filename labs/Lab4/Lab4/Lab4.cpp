@@ -16,19 +16,27 @@ void DisplayHeader()
     cout << setw(30) << setfill('-') << "" << setfill(' ') << endl;
 };
 
+int ValidateInput( int minInput, int maxInput, int input)
+{
+    while (input < minInput || input > maxInput)
+        cout << "ERROR: Input must be between " << minInput << " and " << maxInput << endl;
+
+    return input;
+}
+
 void PromptInput()
 {
     const int MaxValues = 100;
     int valueArray[MaxValues] = { 0 };
     int count = 0;
 
-    for (int index = 0; index < MaxValues; ++index)     //use count instead of maxvalues when displaying, it's necessary here but not in later steps!
+    for (int index = 0; index <= MaxValues; ++index)     //use count instead of maxvalues when displaying, it's necessary here but not in later steps!
     {
         cout << "Enter a value: ";
         cin >> valueArray[index];
 
-        if (valueArray[index] < 0)
-            cout << "ERROR: Input must be greater than 0" << endl;      //continue to prompt !!
+        valueArray[index] = ValidateInput(0, MaxValues, valueArray[index]);
+
         if (valueArray[index] = 0)
             break;
 
