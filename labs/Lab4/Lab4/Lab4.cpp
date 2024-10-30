@@ -16,15 +16,20 @@ void DisplayHeader()
     cout << setw(30) << setfill('-') << "" << setfill(' ') << endl;
 };
 
-int ValidateInput( int minInput, int maxInput, int input)
+int ValidateArrayInput( int minInput, int maxInput, int input)
 {
     while (input < minInput || input > maxInput)
+    {
         cout << "ERROR: Input must be between " << minInput << " and " << maxInput << endl;
+
+        cout << "Enter a value: ";
+        cin >> input;
+    }
 
     return input;
 }
 
-void PromptInput()
+void PromptArrayInput()
 {
     const int MaxValues = 100;
     int valueArray[MaxValues] = { 0 };
@@ -35,9 +40,9 @@ void PromptInput()
         cout << "Enter a value: ";
         cin >> valueArray[index];
 
-        valueArray[index] = ValidateInput(0, MaxValues, valueArray[index]);
+        valueArray[index] = ValidateArrayInput(0, MaxValues, valueArray[index]);
 
-        if (valueArray[index] = 0)
+        if (valueArray[index] == 0)
             break;
 
         //return valueArray[index];
@@ -46,8 +51,40 @@ void PromptInput()
     }
 }
 
+char ValidateMenuInput(char menuInput, char lowerCaseInput, char upperCaseInput)
+{
+    if (menuInput == lowerCaseInput || upperCaseInput)
+    {
+        menuInput = upperCaseInput; 
+        return menuInput;
+    }
+    else if (!lowerCaseInput || !upperCaseInput)
+        cout << "ERROR: must input " << lowerCaseInput << " or " << upperCaseInput << endl;
+}
+
+char DisplayMenu()
+{
+    char menuInput;
+
+    cout << "Main Menu\n";
+    cout << setfill('-') << setw(9) << "" << setfill(' ') << endl;
+    cout << "A) dd\n";
+    cout << "Option 2\n";
+    cout << "Option 3\n";
+    cout << "Option 4\n";
+    cout << "Option 5\n";
+    cout << "Option 6\n";
+    cout << "Option 7\n";
+
+    cin >> menuInput;
+    ValidateMenuInput(menuInput, 'A', 'a');
+
+    return menuInput;
+}
+
 int main()
 {
     DisplayHeader();
-    PromptInput();
+    PromptArrayInput();
+    //DisplayMenu();
 }
