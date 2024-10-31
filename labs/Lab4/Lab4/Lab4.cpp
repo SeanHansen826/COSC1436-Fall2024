@@ -60,7 +60,7 @@ void PromptArrayInput()
 
     for (int index = 0; index < MaxValues; ++index)     //use count instead of maxvalues when displaying, it's necessary here but not in later steps!
     {
-        cout << "Enter a value: ";
+        cout << "value " << index + 1 << ": ";
         cin >> valueArray[index];
 
         valueArray[index] = ValidateArrayInput(MinInput, MaxValues, valueArray[index]);
