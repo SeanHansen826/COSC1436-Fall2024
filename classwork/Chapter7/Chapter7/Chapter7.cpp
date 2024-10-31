@@ -120,11 +120,111 @@ void InitArrayDemo()
 
 //    for (int index = 0; index < MaxRates; ++index)
 //        payRates[index] = 0;           //zero initialize array
+
+    //parallel arrays ... same size and relate each index number (month 0 days, month name 0)
+    //int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};     //zero extends all but first element, continues in order with ","    !!do this!!
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    string monthNames[12] = {"Jan", "Feb", "Mar", "Apr", "May", 
+                             "Jun", "Jul", "Aug", "Sep", "Oct", 
+                             "Nov", "Dec"};
+
+    //monthNames[0] = "Jan";
+    //monthNames[1] = "Feb";
+    //monthNames[2] = "Mar";
+    //monthNames[3] = "Apr";
+    //monthNames[4] = "May";
+    //monthNames[5] = "Jun";
+    //monthNames[6] = "Jul";
+    //monthNames[7] = "Aug";
+    //monthNames[8] = "Sep";
+    //monthNames[9] = "Oct";
+    //monthNames[10] = "Nov";
+    //monthNames[11] = "Dec";
+
+    //daysInMonth[0] = daysInMonth[2] = daysInMonth[4] = daysInMonth[6] = daysInMonth[7] = daysInMonth[9] = daysInMonth[11] = 31;
+    //daysInMonth[1] = 28;
+    //daysInMonth[3] = daysInMonth[5] = daysInMonth[8] = daysInMonth[10] = 30;
+
+    for (int index = 0; index < 12; ++index)
+    {
+        cout << monthNames[index] << " has " << daysInMonth[index] << " days" << endl;
+    }
+}
+
+//COMPARE ARRAYS
+// function parameters 'T id[]'
+bool AreArraysEqual(int left[], int leftSize, int right[], int rightSize)          //no size in parameter decleration "Open array" means you can pass in any size array
+{
+    if (leftSize != rightSize)
+        return false;
+
+    for (int index = 0; index < leftSize; ++index)
+    {
+        if (left[index] != right[index])
+            return false;
+    }
+
+    return true;
+}
+
+int CopyArray(int left[], int leftSize, int right[], int rightSize)
+{
+    int size = (leftSize < rightSize) ? leftSize : rightSize;   //calculates the smaller of the two to do the copying from
+
+    for (int index = 0; index < size; ++index)
+        left[index] = right[index];
+
+    return size;        //returns size so the caller understands if there are values stomped over, or left over based on the size difference of the arrays
+}
+
+//Array cannot be return type from function (because size is not available at run-time)
+void InitializeArray( int values[], int size, int initialValue)
+{
+    for (int index = 0; index, size; ++index)       //behaves like pass-by-ref, because it looks at the same point in memory ... modifies original array
+        values[index] = initialValue;
+}
+
+void UseArrayDemo()
+{
+    int array1[20] = {0};
+
+    //for (int index = 0; index < 20; ++index)
+    //    array1[index] = index + 1;
+
+    InitializeArray(array1, 20, 2);
+
+    //int index2 = 0;
+    //while (index2 < 20)
+    //{
+    //    array1[index2++] = index2 + 1;      //same as code below... assigns value to first element, then on second iteration it will update to the second element.
+    //    //array1[index2] = index2 + 1;
+    //    //++index2;
+    //}
+
+    //for loop for iterating arrays
+    //for (int index = 0; index < 20; ++index)
+    //  cout << array1[index] << endl;
+    for (int value : array1)            //for (type id : arrayName)     //gens same code for each, but this calculates the iteration count for you          !!USE THIS (if declaring array in same block)!!
+        cout << value << endl;
+
+/*    for (int& value : array1)
+        cout << value << endl;*/          //modifies array by adding the &, becomes pass by reference since the int value is just a temp variable like the function parameter
+
+    int array2[20] = {0};
+    int array3[20] = {0};
+
+    //Compare Arrays
+    cout << (array2 == array3)     //cannot compare array size at run-time ... 
+        << " " << AreArraysEqual(array2, 20, array3, 20) << endl;      //don't have to use the entirety of the array, can just use some of the values
+
+    //Assignment
+    int elementsCopied = CopyArray(array3, 20, array2, 20);
+    cout << elementsCopied;
 }
 
 int main()
 {
-    InitArrayDemo();
+    UseArrayDemo();
 }
 
 void NameArrayDemo()
