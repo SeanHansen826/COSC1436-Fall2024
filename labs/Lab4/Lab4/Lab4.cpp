@@ -53,12 +53,17 @@ void PromptArrayInput()
 
 char ValidateMenuInput(char menuInput, char lowerCaseInput, char upperCaseInput)
 {
+    //switch(menuInput)
+    //{
+    //    case lowerCaseInput: 
+    //    case upperCaseInput: return upperCaseInput;
+    //}
     if (menuInput == lowerCaseInput || upperCaseInput)
     {
         menuInput = upperCaseInput; 
         return menuInput;
     }
-    else if (!lowerCaseInput || !upperCaseInput)
+    else if (menuInput == !lowerCaseInput || menuInput == !upperCaseInput)
         cout << "ERROR: must input " << lowerCaseInput << " or " << upperCaseInput << endl;
 }
 
@@ -69,22 +74,16 @@ char DisplayMenu()
     cout << "Main Menu\n";
     cout << setfill('-') << setw(9) << "" << setfill(' ') << endl;
     cout << "A) dd\n";
-    cout << "Option 2\n";
-    cout << "Option 3\n";
-    cout << "Option 4\n";
-    cout << "Option 5\n";
-    cout << "Option 6\n";
-    cout << "Option 7\n";
 
     cin >> menuInput;
-    ValidateMenuInput(menuInput, 'A', 'a');
+    menuInput = ValidateMenuInput(menuInput, 'A', 'a');
 
     return menuInput;
 }
 
 int main()
 {
-    DisplayHeader();
-    PromptArrayInput();
-    //DisplayMenu();
+    //DisplayHeader();
+    //PromptArrayInput();
+    DisplayMenu();
 }
