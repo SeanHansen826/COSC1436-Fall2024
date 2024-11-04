@@ -50,12 +50,9 @@ void DisplayArrayInstructions( int minValue, int maxValue )
 /// @param valueArray Passes array of values
 /// @param MaxValues passes MaxValues of array, AKA array size
 /// @param MinValues Passes minValues of array
-void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues )
+void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int count = 0 )
 {
-    //const int MaxValues = 100;
-    //const int MinValues = 0;
-    //int valueArray[MaxValues] = { 0 };
-    int count = 0;
+    /*int count = 0;*/
 
     DisplayArrayInstructions( MinValues, MaxValues );
 
@@ -76,34 +73,37 @@ void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValue
     }
 }
 
-/// @brief 
-/// @param menuInput 
-/// @param lowerCaseInput 
-/// @param upperCaseInput 
-/// @return uppercase validated menuInput
-char ValidateMenuInput(char menuInput, char upperCaseInput, char lowerCaseInput)
-{
-    while(true)
-    {
-        if (menuInput == lowerCaseInput || menuInput == upperCaseInput)
-        {
-            menuInput = upperCaseInput;
-            return menuInput;
-        } else if (menuInput != lowerCaseInput || menuInput != upperCaseInput)
-        {
-            cout << "ERROR: must input " << upperCaseInput << " or " << lowerCaseInput << endl;
-            cout << "Choose Calculation Type: ";
-            cin >> menuInput;
-            cout << endl;
-        }
-    }
-}
+///// @brief 
+///// @param menuInput 
+///// @param lowerCaseInput 
+///// @param upperCaseInput 
+///// @return uppercase validated menuInput
+//char ValidateMenuInput(char menuInput, char upperCaseInput, char lowerCaseInput)
+//{
+//    while(true)
+//    {
+//        //switch (menuInput)
+//        //{
+//        //    case lowerCaseInput: 
+//        //    case upperCaseInput: menuInput = upperCaseInput; break;
+//        //}
+//        if (menuInput == lowerCaseInput || menuInput == upperCaseInput)
+//        {
+//            menuInput = upperCaseInput;
+//            return menuInput;
+//        } else if (menuInput != lowerCaseInput || menuInput != upperCaseInput)
+//        {
+//            cout << "ERROR: must input " << upperCaseInput << " or " << lowerCaseInput << endl;
+//            cout << "Choose Calculation Type: ";
+//            cin >> menuInput;
+//            cout << endl;
+//        }
+//    }
+//}
 
 /// @brief Displays main menu
 void DisplayMenu()
 {
-    char menuInput;
-
     cout << "Main Menu\n";
     cout << setfill('-') << setw(9) << "" << setfill(' ') << endl;
     cout << "L) argest Value\n";
@@ -112,24 +112,38 @@ void DisplayMenu()
 /// @brief Calculates largest value of valueArray
 void GetLargestValue()
 {
-    int largestValue = 0;
-    cout << "Largeset Value: " << largestValue;
+    int largestValue = 0;       //need to pass through Array
+    
+    //for (int index = 0, index <= count, ++index)           //loops through index to find larger and larger values, until count is reached (<=)
+    //{
+    //    if (valueArray[index] > largestValue)
+    //        largestValue = valueArray[index];
+    //}
+
+    cout << "Largeset Value: " << largestValue << endl;
 }
 
 /// @brief Decides which calculation to use
 void GetDesiredCalculation()
 {
+    bool done = false;
     char menuInput;
-
-    cout << "Choose Calculation Type: ";
-    cin >> menuInput;
-    menuInput = ValidateMenuInput(menuInput, 'L', 'l');
-
-    if (menuInput == 'L')
+    do
     {
-        GetLargestValue();
-        cout << endl;
-    }
+        cout << "Choose Calculation Type: ";
+        cin >> menuInput;
+
+        switch (menuInput)
+        {
+            case 'l':
+            case 'L': GetLargestValue(); cout << endl; done = true; break;
+
+            default:
+            {
+                cout << "ERROR: Must input valid menu command" << endl;
+            }
+        }
+    } while (!done);
 }
 
 int main()
