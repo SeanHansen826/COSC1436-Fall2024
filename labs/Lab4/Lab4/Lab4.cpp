@@ -48,22 +48,23 @@ void DisplayArrayInstructions( int minValue, int maxValue )
 
 /// @brief Prompts user for integer input into an array
 /// @param valueArray Passes array of values
-/// @param arraySize passes array size
-void PromptArrayInput()
+/// @param MaxValues passes MaxValues of array, AKA array size
+/// @param MinValues Passes minValues of array
+void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues )
 {
-    const int MaxValues = 100;
-    const int MinInput = 0;
-    int valueArray[MaxValues] = { 0 };
+    //const int MaxValues = 100;
+    //const int MinValues = 0;
+    //int valueArray[MaxValues] = { 0 };
     int count = 0;
 
-    DisplayArrayInstructions( MinInput, MaxValues );
+    DisplayArrayInstructions( MinValues, MaxValues );
 
-    for (int index = 0; index < MaxValues; ++index)     //use count instead of maxvalues when displaying, it's necessary here but not in later steps!
+    for (int index = 0; index < MaxValues; ++index)
     {
         cout << "value " << index + 1 << ": ";
         cin >> valueArray[index];
 
-        valueArray[index] = ValidateArrayInput(MinInput, MaxValues, valueArray[index]);
+        valueArray[index] = ValidateArrayInput(MinValues, MaxValues, valueArray[index]);
 
         if (valueArray[index] == 0 || index == MaxValues - 1)
         {
@@ -79,7 +80,7 @@ void PromptArrayInput()
 /// @param menuInput 
 /// @param lowerCaseInput 
 /// @param upperCaseInput 
-/// @return menuInput is now a validated Input returned as the upper case character
+/// @return uppercase validated menuInput
 char ValidateMenuInput(char menuInput, char upperCaseInput, char lowerCaseInput)
 {
     while(true)
@@ -99,7 +100,6 @@ char ValidateMenuInput(char menuInput, char upperCaseInput, char lowerCaseInput)
 }
 
 /// @brief Displays main menu
-/// @return validated menuInput from user
 void DisplayMenu()
 {
     char menuInput;
@@ -107,20 +107,16 @@ void DisplayMenu()
     cout << "Main Menu\n";
     cout << setfill('-') << setw(9) << "" << setfill(' ') << endl;
     cout << "L) argest Value\n";
-
-    //cout << "Choose Calculation Type: ";
-    //cin >> menuInput;
-    //menuInput = ValidateMenuInput(menuInput, 'L', 'l');
-
-    //return menuInput;
 }
 
+/// @brief Calculates largest value of valueArray
 void GetLargestValue()
 {
     int largestValue = 0;
     cout << "Largeset Value: " << largestValue;
 }
 
+/// @brief Decides which calculation to use
 void GetDesiredCalculation()
 {
     char menuInput;
@@ -140,9 +136,11 @@ int main()
 {
     DisplayHeader();
 
-    PromptArrayInput();
+    const int MaxValues = 100;
+    const int MinValues = 0;
+    int valueArray[MaxValues] = {0};
+
+    PromptArrayInput( valueArray, MaxValues, MinValues );
     DisplayMenu();
     GetDesiredCalculation();
 }
-
-// test
