@@ -50,10 +50,9 @@ void DisplayArrayInstructions( int minValue, int maxValue )
 /// @param valueArray Passes array of values
 /// @param MaxValues passes MaxValues of array, AKA array size
 /// @param MinValues Passes minValues of array
-void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int count = 0 )
+void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int& count )
 {
     /*int count = 0;*/
-
     DisplayArrayInstructions( MinValues, MaxValues );
 
     for (int index = 0; index < MaxValues; ++index)
@@ -110,21 +109,21 @@ void DisplayMenu()
 }
 
 /// @brief Calculates largest value of valueArray
-void GetLargestValue()
+void GetLargestValue( int valueArray[], int count )
 {
     int largestValue = 0;       //need to pass through Array
     
-    //for (int index = 0, index <= count, ++index)           //loops through index to find larger and larger values, until count is reached (<=)
-    //{
-    //    if (valueArray[index] > largestValue)
-    //        largestValue = valueArray[index];
-    //}
+    for (int index = 0; index <= count; ++index)           //loops through index to find larger and larger values, until count is reached (<=)
+    {
+        if (valueArray[index] > largestValue)
+            largestValue = valueArray[index];
+    }
 
-    cout << "Largeset Value: " << largestValue << endl;
+    cout << "Largest Value: " << largestValue << endl;
 }
 
 /// @brief Decides which calculation to use
-void GetDesiredCalculation()
+void GetDesiredCalculation(int valueArray[], const int MaxValues, const int MinValues, int count)
 {
     bool done = false;
     char menuInput;
@@ -136,7 +135,7 @@ void GetDesiredCalculation()
         switch (menuInput)
         {
             case 'l':
-            case 'L': GetLargestValue(); cout << endl; done = true; break;
+            case 'L': GetLargestValue( valueArray, count); cout << endl; done = true; break;
 
             default:
             {
@@ -152,9 +151,10 @@ int main()
 
     const int MaxValues = 100;
     const int MinValues = 0;
+    int count = 0;
     int valueArray[MaxValues] = {0};
 
-    PromptArrayInput( valueArray, MaxValues, MinValues );
+    PromptArrayInput( valueArray, MaxValues, MinValues, count);
     DisplayMenu();
-    GetDesiredCalculation();
+    GetDesiredCalculation( valueArray, MaxValues, MinValues, count );
 }
