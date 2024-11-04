@@ -11,9 +11,9 @@ using namespace std;
 /// @brief DisplayHeader Displays project header
 void DisplayHeader()
 {
-    cout << setw(30) << setfill('.') << "" << setfill(' ') << endl;
+    cout << setw(27) << setfill('.') << "" << setfill(' ') << endl;
     cout << left << setw(10) << "Project:" << "Array Calculator\n" << setw(10) << "By:" << "Sean Hansen\n" << setw(10) << "Class:" << "COSC-1436-20005\n";
-    cout << setw(30) << setfill('.') << "" << setfill(' ') << endl << endl;
+    cout << setw(27) << setfill('.') << "" << setfill(' ') << endl << endl;
 };
 
 /// @brief Validates input from PromptArrayInput
@@ -39,18 +39,19 @@ int ValidateArrayInput( int minInput, int maxInput, int input)
 /// @param maxValue takes maximum vlue for display purposes
 void DisplayArrayInstructions( int minValue, int maxValue )
 {
-    cout << setw(22) << right << "-=INSTRUCTIONS=-\n";
-    cout << setfill('-') << setw(27) << "" << setfill(' ') << endl;
+    cout << setw(23) << right << "-= INSTRUCTIONS =-\n";
+    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
     cout << "* Input values " << minValue << " - " << maxValue << endl;
     cout << "* Input '0' when finished\n";
-    cout << setfill('-') << setw(27) << "" << setfill(' ') << endl << endl;
+    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl << endl;
 }
 
 /// @brief Prompts user for integer input into an array
 /// @param valueArray Passes array of values
 /// @param MaxValues passes MaxValues of array, AKA array size
 /// @param MinValues Passes minValues of array
-void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int& count )
+/// @param count reference passes the amount of items input into the array
+void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int& count )         //instead of pass by ref... return count?
 {
     /*int count = 0;*/
     DisplayArrayInstructions( MinValues, MaxValues );
@@ -72,48 +73,22 @@ void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValue
     }
 }
 
-///// @brief 
-///// @param menuInput 
-///// @param lowerCaseInput 
-///// @param upperCaseInput 
-///// @return uppercase validated menuInput
-//char ValidateMenuInput(char menuInput, char upperCaseInput, char lowerCaseInput)
-//{
-//    while(true)
-//    {
-//        //switch (menuInput)
-//        //{
-//        //    case lowerCaseInput: 
-//        //    case upperCaseInput: menuInput = upperCaseInput; break;
-//        //}
-//        if (menuInput == lowerCaseInput || menuInput == upperCaseInput)
-//        {
-//            menuInput = upperCaseInput;
-//            return menuInput;
-//        } else if (menuInput != lowerCaseInput || menuInput != upperCaseInput)
-//        {
-//            cout << "ERROR: must input " << upperCaseInput << " or " << lowerCaseInput << endl;
-//            cout << "Choose Calculation Type: ";
-//            cin >> menuInput;
-//            cout << endl;
-//        }
-//    }
-//}
-
 /// @brief Displays main menu
 void DisplayMenu()
 {
-    cout << "Main Menu\n";
-    cout << setfill('-') << setw(9) << "" << setfill(' ') << endl;
+    cout << setw(14) << "Main Menu\n";
+    cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
     cout << "L) argest Value\n";
+    cout << "Q) uit\n";
+    cout << endl;
 }
 
 /// @brief Calculates largest value of valueArray
 void GetLargestValue( int valueArray[], int count )
 {
-    int largestValue = 0;       //need to pass through Array
+    int largestValue = 0;
     
-    for (int index = 0; index <= count; ++index)           //loops through index to find larger and larger values, until count is reached (<=)
+    for (int index = 0; index <= count; ++index)
     {
         if (valueArray[index] > largestValue)
             largestValue = valueArray[index];
@@ -122,20 +97,30 @@ void GetLargestValue( int valueArray[], int count )
     cout << "Largest Value: " << largestValue << endl;
 }
 
-/// @brief Decides which calculation to use
-void GetDesiredCalculation(int valueArray[], const int MaxValues, const int MinValues, int count)
+/// @brief GetDesiredCalculation prompts, validates, and decides which calculation to use
+/// @param valueArray Passes array of values
+/// @param MaxValues passes MaxValues of array, AKA array size
+/// @param MinValues Passes minValues of array
+/// @param count reference passes the amount of items input into the array
+/// @return quit true or false
+bool GetDesiredCalculation(int valueArray[], const int MaxValues, const int MinValues, int count)
 {
     bool done = false;
     char menuInput;
+    bool quit = false;
     do
     {
         cout << "Choose Calculation Type: ";
         cin >> menuInput;
+        cout << endl;
 
         switch (menuInput)
         {
             case 'l':
-            case 'L': GetLargestValue( valueArray, count); cout << endl; done = true; break;
+            case 'L': GetLargestValue(valueArray, count); cout << endl; done = true; return quit; break;
+
+            case 'Q':
+            case 'q': quit = true; done = true; return quit; break;
 
             default:
             {
@@ -154,7 +139,16 @@ int main()
     int count = 0;
     int valueArray[MaxValues] = {0};
 
-    PromptArrayInput( valueArray, MaxValues, MinValues, count);
-    DisplayMenu();
-    GetDesiredCalculation( valueArray, MaxValues, MinValues, count );
+    PromptArrayInput(valueArray, MaxValues, MinValues, count);
+
+    bool done = false;
+    do
+    {
+        DisplayMenu();
+        done = GetDesiredCalculation(valueArray, MaxValues, MinValues, count);
+    } while (!done);
+
+    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
+    cout << setw(23) << "Terminating Program" << endl;
+    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
 }
