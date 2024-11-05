@@ -51,7 +51,7 @@ void DisplayArrayInstructions( int minValue, int maxValue )
 /// @param MaxValues passes MaxValues of array, AKA array size
 /// @param MinValues Passes minValues of array
 /// @param count reference passes the amount of items input into the array
-void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int& count )         //instead of pass by ref... return count?
+void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int& count )         //instead of pass by ref... return count? (set intmain promptInput equal to count, then pass that value to GetDesiredCalc!
 {
     /*int count = 0;*/
     DisplayArrayInstructions( MinValues, MaxValues );
