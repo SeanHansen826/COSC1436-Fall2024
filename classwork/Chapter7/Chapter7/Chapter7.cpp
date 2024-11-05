@@ -180,7 +180,7 @@ int CopyArray(int left[], int leftSize, int right[], int rightSize)
 //Array cannot be return type from function (because size is not available at run-time)
 void InitializeArray( int values[], int size, int initialValue)
 {
-    for (int index = 0; index, size; ++index)       //behaves like pass-by-ref, because it looks at the same point in memory ... modifies original array
+    for (int index = 0; index < size; ++index)       //behaves like pass-by-ref, because it looks at the same point in memory ... modifies original array
         values[index] = initialValue;
 }
 
@@ -222,48 +222,103 @@ void UseArrayDemo()
     cout << elementsCopied;
 }
 
+void DisplayArray(int values[], int size, int valueWidth, int maxCellsPerRow)
+{
+    cout << left;
+    for (int index = 0; index < size; ++index)
+    {
+        cout << setw(valueWidth) << values[index] << " ";
+
+        //if (index > 0 && index % maxCellsPerRow == 0)           //% = modulos (remainder)   if printed out maxCellsPerRow values, endl (newLine)
+        if((index + 1) % maxCellsPerRow == 0)
+            cout << endl;
+    }
+    cout << endl << right;
+}
+
+void DisplayTable(int values[][10], int size)       //all dimensions other than rows must be fixed, col = 10
+{
+    for (int row = 0; row < size; ++row)
+        for (int col = 0; col < 10; ++col)
+        {
+            DisplayArray(values[row], 10, 5, 10);       //row doesn't have to be a const, but col does as it can't get your size at run tim
+        }
+}
+
+void TableDemo()
+{
+    //index[rows][columns]      --compile time constant for all dimensions      this doubles as your time, typeSize * (rows * columns)
+    //int multiplyTable[5][10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
+    //                             2, 4, 6, 8, 10, 12, 14, 16, 18 ,20}    //when the values run out of rows to assign it will move onto next column
+    int multiplyTable[5][10] = {{1, 2, 3, 4, 5}
+                             ,  {2, 4, 6, 8, 10, 12, 14, 16, 18 ,20}};    //each set of brackets assigns the rows in each column (in order)
+
+
+    //ROW MAJOR - rows are enumerated, then columns         //always use this
+    for (int row = 0; row < 5; ++row)
+        for (int col = 0; col < 10; ++col)
+            multiplyTable[row][col] = (row + 1) * (col + 1);
+
+    //COLUMN MAJOR ordering - columns are enumerated, then rows     //very slow, essentially random access memory and very slow
+    /*for (int col = 0; col < 5; ++col)
+        for (int row = 0; row < 10; ++row)
+            multiplyTable[row][col] = (row + 1) * (col + 1);*/
+
+    /*DisplayTable(multiplyTable, 5);*/
+    //for (int row = 0; row < 5; ++row)
+    //{
+    //    for (int col = 0; col < 10; ++col)
+    //        cout << setw(5) << multiplyTable[row][col];
+
+    //    cout << endl;
+    //}
+}
+
 int main()
 {
-    UseArrayDemo();
+    TableDemo();
+    /*int values[] = {1,2,3,4,5};
+
+    DisplayArray(values, 5, 10, 3);*/       //displays 2d array
 }
 
-void NameArrayDemo()
-{
-    //Array -- set of related data
-
-/*    string student1;
-    string student2;
-    string student3;
-    string student4;
-    string student5*/
-
-    //must be a compile time constant
-    const int MaxStudents = 100;
-    string students [MaxStudents];      //set as max amount and const, so it is a compile time const. (only available to primitives)        //use this for lab!
-
-
-    //Store roster of students
-    for (int index = 0; index < MaxStudents; ++index)
-    {
-        string student;                 
-        cout << "Enter student name: ";         //get student info
-        getline(cin, student);
-        if (student == "")
-            break;
-
-        //student at index 0, first element
-        //  read as student sub 0 ... subscript
-        // [] is the array access operator, only used for arrays
-
-        //since it is essentially a variable you can push this into a function
-        students[index] = student;                  //assign student info to array element
-    };
-
-    //Print Roster
-    for (int index = 0; index < MaxStudents; ++index)
-    {
-        if (students[index] != "")
-            cout << students[index] << endl;
-    }
-}
+//void NameArrayDemo()
+//{
+//    //Array -- set of related data
+//
+///*    string student1;
+//    string student2;
+//    string student3;
+//    string student4;
+//    string student5*/
+//
+//    //must be a compile time constant
+//    const int MaxStudents = 100;
+//    string students [MaxStudents];      //set as max amount and const, so it is a compile time const. (only available to primitives)        //use this for lab!
+//
+//
+//    //Store roster of students
+//    for (int index = 0; index < MaxStudents; ++index)
+//    {
+//        string student;                 
+//        cout << "Enter student name: ";         //get student info
+//        getline(cin, student);
+//        if (student == "")
+//            break;
+//
+//        //student at index 0, first element
+//        //  read as student sub 0 ... subscript
+//        // [] is the array access operator, only used for arrays
+//
+//        //since it is essentially a variable you can push this into a function
+//        students[index] = student;                  //assign student info to array element
+//    };
+//
+//    //Print Roster
+//    for (int index = 0; index < MaxStudents; ++index)
+//    {
+//        if (students[index] != "")
+//            cout << students[index] << endl;
+//    }
+//}
 
