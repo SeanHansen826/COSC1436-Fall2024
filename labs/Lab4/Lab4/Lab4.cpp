@@ -58,53 +58,69 @@ void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValue
 
     for (int index = 0; index < MaxValues; ++index)
     {
+        int input;
         cout << "value " << index + 1 << ": ";
-        cin >> valueArray[index];
+        cin >> input;
 
-        valueArray[index] = ValidateArrayInput(MinValues, MaxValues, valueArray[index]);
-
-        if (valueArray[index] == 0 || index == MaxValues - 1)
+        if (input != 0)
+        {
+            input = ValidateArrayInput(MinValues, MaxValues, input);
+            valueArray[index] = input;
+        }
+        else if(input == 0)
         {
             cout << endl;
             break;
         }
-        
+
         ++count;
     }
 }
 
-/// @brief Displays main menu
-void DisplayMenu()
-{
-    cout << setw(14) << "Main Menu\n";
-    cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
-    cout << "L) argest Value\n";
-    cout << "Q) uit\n";
-    cout << endl;
-}
-
 /// @brief Calculates largest value of valueArray
-void GetLargestValue( int valueArray[], int count )
+/// @param valueArray passes value array
+/// @param count passes size which is equal to the number of array entries
+void GetLargestValue( int valueArray[], int count, const int MinValues )
 {
-    int largestValue = 0;
+    int largestValue = MinValues;
     
-    for (int index = 0; index <= count; ++index)
+    for (int index = 0; index < count; ++index)
     {
         if (valueArray[index] > largestValue)
             largestValue = valueArray[index];
     }
 
-    cout << "Largest Value: " << largestValue << endl;
+    cout << "* Largest Value: " << largestValue << " *" << endl << endl;
 }
 
-/// @brief GetDesiredCalculation prompts, validates, and decides which calculation to use
+void GetSmallestValue(int valueArray[], int count, const int MaxValues)
+{
+    int smallestValue = MaxValues;
+
+    for (int index = 0; index < count; ++index)
+    {
+        if (valueArray[index] < smallestValue)
+            smallestValue = valueArray[index];
+    }
+
+    cout << "* Smallest Value: " << smallestValue << " *" << endl << endl;
+}
+
+/// @brief Displays main menu, Gets desired Calculation
 /// @param valueArray Passes array of values
 /// @param MaxValues passes MaxValues of array, AKA array size
 /// @param MinValues Passes minValues of array
 /// @param count reference passes the amount of items input into the array
 /// @return quit true or false
-bool GetDesiredCalculation(int valueArray[], const int MaxValues, const int MinValues, int count)
+bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int count)
 {
+    cout << setw(14) << "Main Menu\n";
+    cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
+    cout << "L) argest Value\n";
+    cout << "S) mallest Value\n";
+    cout << "Q) uit\n";
+    cout << endl;
+
     bool done = false;
     char menuInput;
     bool quit = false;
@@ -112,12 +128,14 @@ bool GetDesiredCalculation(int valueArray[], const int MaxValues, const int MinV
     {
         cout << "Choose Calculation Type: ";
         cin >> menuInput;
-        cout << endl;
 
         switch (menuInput)
         {
             case 'l':
-            case 'L': GetLargestValue(valueArray, count); cout << endl; done = true; return quit; break;
+            case 'L': GetLargestValue(valueArray, count, MinValues); cout << endl; done = true; return quit; break;
+
+            case 'S':
+            case 's': GetSmallestValue(valueArray, count, MaxValues); cout << endl; done = true; return quit; break;
 
             case 'Q':
             case 'q': quit = true; done = true; return quit; break;
@@ -128,6 +146,14 @@ bool GetDesiredCalculation(int valueArray[], const int MaxValues, const int MinV
             }
         }
     } while (!done);
+}   //not all control paths return a value (?)
+
+void DisplayQuitMessage()
+{
+    cout << endl << endl;
+    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
+    cout << setw(23) << "Terminating Program" << endl;
+    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
 }
 
 int main()
@@ -135,7 +161,7 @@ int main()
     DisplayHeader();
 
     const int MaxValues = 100;
-    const int MinValues = 0;
+    const int MinValues = 1;
     int count = 0;
     int valueArray[MaxValues] = {0};
 
@@ -144,11 +170,8 @@ int main()
     bool done = false;
     do
     {
-        DisplayMenu();
-        done = GetDesiredCalculation(valueArray, MaxValues, MinValues, count);
+        done = DisplayMenu(valueArray, MaxValues, MinValues, count);
     } while (!done);
 
-    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
-    cout << setw(23) << "Terminating Program" << endl;
-    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
+    DisplayQuitMessage();
 }
