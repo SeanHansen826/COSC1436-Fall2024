@@ -7,6 +7,9 @@
 #include <cmath>
 
 using namespace std;
+using std::cout;
+using std::cin;
+
 
 /// @brief DisplayHeader Displays project header
 void DisplayHeader()
@@ -105,6 +108,22 @@ void GetLargest( int valueArray[], int count, const int MinValues )
     cout << "* Largest Value: " << largestValue << " *" << endl << endl;
 }
 
+void GetMean(int valueArray[], int count)
+{
+    double meanOfArray = 0;
+    int sumOfArray = 0;
+
+    for (int index = 0; index < count; ++index)
+    {
+        sumOfArray += valueArray[index];
+    }
+
+    meanOfArray = (double)sumOfArray / count;
+
+    cout << fixed << setprecision(3);
+    cout << "* Mean: " << meanOfArray << " * " << endl << endl;
+}
+
 /// @brief Gets smallest value
 /// @param valueArray calls array
 /// @param count calls count for total array values
@@ -134,6 +153,7 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
     cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
     cout << "A) dd\n";
     cout << "L) argest\n";
+    cout << "M) ean\n";
     cout << "S) mallest\n";
     cout << "Q) uit\n";
     cout << endl;
@@ -157,6 +177,9 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
 
                 case 'L':
                 case 'l': GetLargest(valueArray, count, MinValues); cout << endl; done = true; return quit; break;
+
+                case 'M':
+                case 'm': GetMean(valueArray, count); cout << endl; done = true; return quit; break;
 
                 case 'S':
                 case 's': GetSmallest(valueArray, count, MaxValues); cout << endl; done = true; return quit; break;
