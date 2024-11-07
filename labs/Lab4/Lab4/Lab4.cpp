@@ -92,6 +92,16 @@ void GetSum(int valueArray[], int count)
     cout << "* Sum of Array: " << sumOfArray << " *" << endl << endl;
 }
 
+void DisplayArray(int valueArray[], int count)
+{
+    cout << "* Values *" << endl;
+    cout << setfill('=') << setw(10) << "" << setfill(' ') << endl;
+    for (int index = 0; index < count; ++index)     //show 10 values per line
+    {
+        cout << "value " << index + 1 << ": " << valueArray[index] << endl;
+    }
+}
+
 /// @brief Calculates largest value of valueArray
 /// @param valueArray passes value array
 /// @param count passes size which is equal to the number of array entries
@@ -152,6 +162,7 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
     cout << setw(14) << "Main Menu\n";
     cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
     cout << "A) dd\n";
+    cout << "D) isplay\n";
     cout << "L) argest\n";
     cout << "M) ean\n";
     cout << "S) mallest\n";
@@ -169,11 +180,15 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
             if(count != 0)
             cout << "Choose Calculation Type: ";
             cin >> menuInput;
+            cout << endl;
 
             switch (menuInput)
             {
                 case 'A':
                 case 'a': GetSum(valueArray, count); cout << endl; done = true; return quit; break;
+
+                case 'D':
+                case 'd': DisplayArray(valueArray, count); cout << endl; done = true; return quit; break;
 
                 case 'L':
                 case 'l': GetLargest(valueArray, count, MinValues); cout << endl; done = true; return quit; break;
