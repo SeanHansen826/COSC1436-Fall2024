@@ -80,6 +80,9 @@ void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValue
     }
 }
 
+/// @brief Gets sum of all array elements
+/// @param valueArray passes array of values
+/// @param count passes number of inputs in array
 void GetSum(int valueArray[], int count)
 {
     int sumOfArray = 0;
@@ -92,6 +95,9 @@ void GetSum(int valueArray[], int count)
     cout << "* Sum of Array: " << sumOfArray << " *" << endl << endl;
 }
 
+/// @brief Displays array elements
+/// @param valueArray passes array
+/// @param count passes number of inputs in array
 void DisplayArray(int valueArray[], int count)
 {
     cout << setw(30) << "* Values *" << endl;
@@ -108,6 +114,7 @@ void DisplayArray(int valueArray[], int count)
 /// @brief Calculates largest value of valueArray
 /// @param valueArray passes value array
 /// @param count passes size which is equal to the number of array entries
+/// @MinValues passes minimum values to be init to largest value, will be overwritten if true
 void GetLargest( int valueArray[], int count, const int MinValues )
 {
     int largestValue = MinValues;
@@ -121,6 +128,9 @@ void GetLargest( int valueArray[], int count, const int MinValues )
     cout << "* Largest Value: " << largestValue << " *" << endl << endl;
 }
 
+/// @brief Gets mean of array
+/// @param valueArray passes array
+/// @param count passes number of elements in array
 void GetMean(int valueArray[], int count)
 {
     double meanOfArray = 0;
@@ -158,7 +168,7 @@ void GetSmallest(int valueArray[], int count, const int MaxValues)
 /// @param valueArray Passes array of values
 /// @param MaxValues passes MaxValues of array, AKA array size
 /// @param MinValues Passes minValues of array
-/// @param count reference passes the amount of items input into the array
+/// @param count passes the amount of items input into the array
 /// @return quit true or false
 bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int count)
 {
@@ -216,8 +226,9 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
     {
         cout << "* NO ARRAY INPUTS *" << endl << endl;
     }
-}   //not all control paths return a value (?)
+}
 
+/// @brief Displays termination message
 void DisplayQuitMessage()
 {
     cout << endl << endl;
