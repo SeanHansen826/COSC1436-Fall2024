@@ -14,8 +14,8 @@ using std::cin;
 /// @brief DisplayHeader Displays project header
 void DisplayHeader()
 {
-    cout << setw(27) << setfill('.') << "" << setfill(' ') << endl;
-    cout << left << setw(10) << "Project:" << "Array Calculator\n" << setw(10) << "By:" << "Sean Hansen\n" << setw(10) << "Class:" << "COSC-1436-20005\n";
+    cout << right << setw(27) << setfill('.') << "" << setfill(' ') << endl;
+    cout << setw(10) << "Project: " << "Array Calculator\n" << setw(10) << "By: " << "Sean Hansen\n" << setw(10) << "Class: " << "COSC-1436-20005\n";
     cout << setw(27) << setfill('.') << "" << setfill(' ') << endl << endl;
 };
 
@@ -42,7 +42,7 @@ int ValidateArrayInput( int minInput, int maxInput, int input)
 /// @param maxValue takes maximum vlue for display purposes
 void DisplayArrayInstructions( int minValue, int maxValue )
 {
-    cout << setw(23) << right << "-= INSTRUCTIONS =-\n";
+    cout << right << setw(22) << "-= INSTRUCTIONS =-" << endl;
     cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
     cout << "* Input values " << minValue << " - " << maxValue << endl;
     cout << "* Input '0' when finished\n";
@@ -94,11 +94,14 @@ void GetSum(int valueArray[], int count)
 
 void DisplayArray(int valueArray[], int count)
 {
-    cout << "* Values *" << endl;
-    cout << setfill('=') << setw(10) << "" << setfill(' ') << endl;
+    cout << setw(30) << "* Values *" << endl;
+    cout << setfill('.') << setw(54) << "" << setfill(' ') << endl;
     for (int index = 0; index < count; ++index)     //show 10 values per line
     {
-        cout << "value " << index + 1 << ": " << valueArray[index] << endl;
+        cout << right << setw(5) << valueArray[index];
+
+        if ((index + 1) % 10 == 0)        //if index modulo 10 is equal to 0, newline
+            cout << endl;
     }
 }
 
@@ -159,7 +162,7 @@ void GetSmallest(int valueArray[], int count, const int MaxValues)
 /// @return quit true or false
 bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int count)
 {
-    cout << setw(14) << "Main Menu\n";
+    cout << right << setw(14) << "Main Menu\n";
     cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
     cout << "A) dd\n";
     cout << "D) isplay\n";
@@ -218,7 +221,7 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
 void DisplayQuitMessage()
 {
     cout << endl << endl;
-    cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
+    cout << right << setfill('.') << setw(27) << "" << setfill(' ') << endl;
     cout << setw(23) << "Terminating Program" << endl;
     cout << setfill('.') << setw(27) << "" << setfill(' ') << endl;
 }
