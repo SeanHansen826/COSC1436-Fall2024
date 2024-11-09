@@ -24,11 +24,11 @@ void DisplayHeader()
 /// @param maxInput Maximum input allowed in array
 /// @param input Input taken from user
 /// @return Returns validated input
-int ValidateArrayInput( int minInput, int maxInput, int input)
+int ValidateArrayInput( int minInput, int input)
 {
-    while (input < minInput || input > maxInput)
+    while (input < minInput)
     {
-        cout << "ERROR: Input must be between " << minInput << " and " << maxInput << endl;
+        cout << "ERROR: Input must be above " << minInput << "." << endl;
 
         cout << "Enter a value: ";
         cin >> input;
@@ -51,15 +51,15 @@ void DisplayArrayInstructions( int minValue, int maxValue )
 
 /// @brief Prompts user for integer input into an array
 /// @param valueArray Passes array of values
-/// @param MaxValues passes MaxValues of array, AKA array size
+/// @param MaxElements passes MaxElements of array, AKA array size
 /// @param MinValues Passes minValues of array
 /// @param count reference passes the amount of items input into the array
-void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValues, int& count )         //instead of pass by ref... return count? (set intmain promptInput equal to count, then pass that value to GetDesiredCalc!
+void PromptArrayInput( int valueArray[], const int MaxElements, const int MinValues, int& count )         //instead of pass by ref... return count? (set intmain promptInput equal to count, then pass that value to GetDesiredCalc!
 {
     /*int count = 0;*/
-    DisplayArrayInstructions( MinValues, MaxValues );
+    DisplayArrayInstructions( MinValues, MaxElements );
 
-    for (int index = 0; index < MaxValues; ++index)
+    for (int index = 0; index < MaxElements; ++index)
     {
         int input;
         cout << "value " << index + 1 << ": ";
@@ -67,7 +67,7 @@ void PromptArrayInput( int valueArray[], const int MaxValues, const int MinValue
 
         if (input != 0)
         {
-            input = ValidateArrayInput(MinValues, MaxValues, input);
+            input = ValidateArrayInput(MinValues, input);
             valueArray[index] = input;
         }
         else if(input == 0)
@@ -128,6 +128,13 @@ void GetLargest( int valueArray[], int count, const int MinValues )
     cout << "* Largest Value: " << largestValue << " *" << endl << endl;
 }
 
+
+//void InsertIntoArray(int valueArray[], const int MaxElements, const int MinValues, int count)
+//{
+//    PromptArrayInput(valueArray, MaxElements, MinValues, count);
+//}
+
+
 /// @brief Gets mean of array
 /// @param valueArray passes array
 /// @param count passes number of elements in array
@@ -150,10 +157,10 @@ void GetMean(int valueArray[], int count)
 /// @brief Gets smallest value
 /// @param valueArray calls array
 /// @param count calls count for total array values
-/// @param MaxValues sets maxValues as the smallestValue while (count != 0)
-void GetSmallest(int valueArray[], int count, const int MaxValues)
+/// @param MaxElements sets MaxElements as the smallestValue while (count != 0)
+void GetSmallest(int valueArray[], int count, const int MaxElements)
 {
-    int smallestValue = MaxValues;
+    int smallestValue = MaxElements;
 
     for (int index = 0; index < count; ++index)
     {
@@ -166,11 +173,11 @@ void GetSmallest(int valueArray[], int count, const int MaxValues)
 
 /// @brief Displays main menu, Gets desired Calculation
 /// @param valueArray Passes array of values
-/// @param MaxValues passes MaxValues of array, AKA array size
+/// @param MaxElements passes MaxElements of array, AKA array size
 /// @param MinValues Passes minValues of array
 /// @param count passes the amount of items input into the array
 /// @return quit true or false
-bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int count)
+bool DisplayMenu(int valueArray[], const int MaxElements, const int MinValues, int count)
 {
     cout << right << setw(14) << "Main Menu\n";
     cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
@@ -203,6 +210,9 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
                 case 'D':
                 case 'd': DisplayArray(valueArray, count); cout << endl; done = true; return quit; break;
 
+               /* case 'I':
+                case 'i': InsertIntoArray( valueArray, MaxElements, MinValues, count ); cout << endl; done = true; return quit; break;*/
+
                 case 'L':
                 case 'l': GetLargest(valueArray, count, MinValues); cout << endl; done = true; return quit; break;
 
@@ -210,7 +220,7 @@ bool DisplayMenu(int valueArray[], const int MaxValues, const int MinValues, int
                 case 'm': GetMean(valueArray, count); cout << endl; done = true; return quit; break;
 
                 case 'S':
-                case 's': GetSmallest(valueArray, count, MaxValues); cout << endl; done = true; return quit; break;
+                case 's': GetSmallest(valueArray, count, MaxElements); cout << endl; done = true; return quit; break;
 
                 case 'Q':
                 case 'q': quit = true; done = true; return quit; break;
@@ -241,17 +251,17 @@ int main()
 {
     DisplayHeader();
 
-    const int MaxValues = 100;
+    const int MaxElements = 100;
     const int MinValues = 1;
     int count = 0;
-    int valueArray[MaxValues] = {0};
+    int valueArray[MaxElements] = {0};
 
-    PromptArrayInput(valueArray, MaxValues, MinValues, count);
+    PromptArrayInput(valueArray, MaxElements, MinValues, count);
 
     bool done = false;
     do
     {
-        done = DisplayMenu(valueArray, MaxValues, MinValues, count);
+        done = DisplayMenu(valueArray, MaxElements, MinValues, count);
     } while (!done);
 
     DisplayQuitMessage();
