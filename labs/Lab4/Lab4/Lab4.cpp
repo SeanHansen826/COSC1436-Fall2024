@@ -7,9 +7,6 @@
 #include <cmath>
 
 using namespace std;
-using std::cout;
-using std::cin;
-
 
 /// @brief DisplayHeader Displays project header
 void DisplayHeader()
@@ -59,10 +56,10 @@ void PromptArrayInput( int valueArray[], const int MaxElements, const int MinVal
     /*int count = 0;*/
     DisplayArrayInstructions( MinValues, MaxElements );
 
-    for (int index = 0; index < MaxElements; ++index)
+    for (int index = count; index < MaxElements; ++index)
     {
         int input;
-        cout << "value " << index + 1 << ": ";
+        cout << "value " << count + 1 << ": ";
         cin >> input;
 
         if (input != 0)
@@ -128,13 +125,6 @@ void GetLargest( int valueArray[], int count, const int MinValues )
     cout << "* Largest Value: " << largestValue << " *" << endl << endl;
 }
 
-
-//void InsertIntoArray(int valueArray[], const int MaxElements, const int MinValues, int count)
-//{
-//    PromptArrayInput(valueArray, MaxElements, MinValues, count);
-//}
-
-
 /// @brief Gets mean of array
 /// @param valueArray passes array
 /// @param count passes number of elements in array
@@ -175,67 +165,62 @@ void GetSmallest(int valueArray[], int count, const int MaxElements)
 /// @param valueArray Passes array of values
 /// @param MaxElements passes MaxElements of array, AKA array size
 /// @param MinValues Passes minValues of array
-/// @param count passes the amount of items input into the array
+/// @param count passes by ref the amount of items input into the array
 /// @return quit true or false
-bool DisplayMenu(int valueArray[], const int MaxElements, const int MinValues, int count)
+bool DisplayMenu(int valueArray[], const int MaxElements, const int MinValues, int& count)
 {
+
     cout << right << setw(14) << "Main Menu\n";
     cout << setfill('-') << setw(17) << "" << setfill(' ') << endl;
     cout << "A) dd\n";
     cout << "D) isplay\n";
+    cout << "I) nsert\n";
     cout << "L) argest\n";
     cout << "M) ean\n";
     cout << "S) mallest\n";
-    cout << "Q) uit\n";
-    cout << endl;
+    cout << "Q) uit\n" << endl;
 
-    bool done = false;
-    char menuInput;
-    bool quit = false;
-
-    if(count != 0)
-    {
-        do
-        {
-            if(count != 0)
-            cout << "Choose Calculation Type: ";
-            cin >> menuInput;
-            cout << endl;
-
-            switch (menuInput)
-            {
-                case 'A':
-                case 'a': GetSum(valueArray, count); cout << endl; done = true; return quit; break;
-
-                case 'D':
-                case 'd': DisplayArray(valueArray, count); cout << endl; done = true; return quit; break;
-
-               /* case 'I':
-                case 'i': InsertIntoArray( valueArray, MaxElements, MinValues, count ); cout << endl; done = true; return quit; break;*/
-
-                case 'L':
-                case 'l': GetLargest(valueArray, count, MinValues); cout << endl; done = true; return quit; break;
-
-                case 'M':
-                case 'm': GetMean(valueArray, count); cout << endl; done = true; return quit; break;
-
-                case 'S':
-                case 's': GetSmallest(valueArray, count, MaxElements); cout << endl; done = true; return quit; break;
-
-                case 'Q':
-                case 'q': quit = true; done = true; return quit; break;
-
-                default:
-                {
-                    cout << "ERROR: Must input valid menu command" << endl;
-                }
-            }
-        } while (!done);
-    }
-    else if (count == 0)
+    if (count == 0)
     {
         cout << "* NO ARRAY INPUTS *" << endl << endl;
+        return false;
     }
+
+    char menuInput;
+    cout << "Choose Calculation Type: ";
+    cin >> menuInput;
+    cout << endl;
+
+    switch (menuInput)
+    {
+        case 'A':
+        case 'a': GetSum(valueArray, count); break;
+
+        case 'D':
+        case 'd': DisplayArray(valueArray, count); break;
+
+        case 'I':
+        case 'i': PromptArrayInput(valueArray, MaxElements, MinValues, count); break;
+
+        case 'L':
+        case 'l': GetLargest(valueArray, count, MinValues); break;
+
+        case 'M':
+        case 'm': GetMean(valueArray, count); break;
+
+        case 'S':
+        case 's': GetSmallest(valueArray, count, MaxElements); break;
+
+        case 'Q':
+        case 'q': return true;
+
+        default:
+            cout << "ERROR: Must input valid menu command" << endl << endl;
+            return false;
+    }
+
+    cout << endl;
+    return false;
 }
 
 /// @brief Displays termination message
