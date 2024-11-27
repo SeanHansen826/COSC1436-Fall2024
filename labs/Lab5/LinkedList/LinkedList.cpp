@@ -29,8 +29,24 @@ void DisplayHeader()
 void AddToList()
 {
     int input;
-    cout << "Enter a Value: ";
-    cin >> input;
+    int validInput;
+
+        cout << "Enter a Value: ";
+        cin >> input;
+
+        //if (isdigit(input) == true)
+        //{
+        //    validInput = input;
+        //    isValidated = true;
+        //    break;
+        //}
+        //else
+        //{
+        //    cout << left << setfill('=') << setw(35) << "" << setfill(' ') << endl;
+        //    cout << "ERROR: Must input a valid integer" << endl;
+        //    cout << left << setfill('=') << setw(35) << "" << setfill(' ') << endl << endl;
+        //}
+        
 }
 
 bool DisplayMenu()
@@ -80,6 +96,5 @@ int main()
         quit = DisplayMenu();
         if (quit == true)
             break;
-
     }
 }
