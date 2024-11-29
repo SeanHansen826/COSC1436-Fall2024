@@ -19,6 +19,7 @@ struct LinkedList
     Node * Head = nullptr;                  //when using this, use pass by ref or mem. addresses
 };
 
+/// @brief Displays project header information
 void DisplayHeader()
 {
     cout << right << setw(27) << setfill('.') << "" << setfill(' ') << endl;
@@ -44,7 +45,21 @@ void AddToList(LinkedList &list)
             current = current->Next;        //when !nullptr, sets to next (moving to next memory address in list)
 
         current->Next = pNewNode;           //when nullptr, sets equal to pNewNode mem adress, with value stored by ref
+
+        //delete pNewNode; (?)              //need to delete new node to resolve mem leak
     }
+}
+
+void PrintList(const LinkedList &list)      //Passed const list by ref for memory performance
+{
+    Node * current = list.Head;             //looks at mem address of the head to call to
+
+    while (current != nullptr)              //while the value at the list is not nullptr
+    {
+        cout << current->value << " ";      //displays the dereferenced value at the memaddress "current"
+        current = current->Next;            //moves to the next address if not nullptr
+    }
+    cout << endl << endl;                   //line break when finished displaying
 }
 
 bool DisplayMenu(LinkedList &list)
@@ -54,8 +69,9 @@ bool DisplayMenu(LinkedList &list)
     bool quit = false;
 
     cout << left << setfill('-') << setw(20) << "" << setfill(' ') << endl;
-    cout << left << setw(20) << "Q) uit" << endl;
     cout << left << setw(20) << "A) dd" << endl;
+    cout << left << setw(20) << "P) rint" << endl;
+    cout << left << setw(20) << "Q) uit" << endl;
     cout << left << setfill('-') << setw(20) << "" << setfill(' ') << endl;
 
     do
@@ -66,11 +82,14 @@ bool DisplayMenu(LinkedList &list)
 
         switch (menuInput)
         {
-            case 'Q':
-            case 'q': quit = true; done = true; break;
-
             case 'A':
             case 'a': AddToList(list); done = true; break;      //passes list to be used in AddToList
+
+            case 'P':
+            case 'p': PrintList(list); done = true; break;
+
+            case 'Q':
+            case 'q': quit = true; done = true; break;
 
             default:
             {
