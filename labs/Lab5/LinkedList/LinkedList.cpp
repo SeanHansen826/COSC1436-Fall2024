@@ -16,7 +16,7 @@ struct Node
 /// @brief LinkedList stores nodes
 struct LinkedList
 {
-    Node * Head = nullptr;      //when using this, use pass by ref or mem. addresses
+    Node * Head = nullptr;                  //when using this, use pass by ref or mem. addresses
 };
 
 void DisplayHeader()
@@ -26,30 +26,28 @@ void DisplayHeader()
     cout << setw(27) << setfill('.') << "" << setfill(' ') << endl << endl;
 };
 
-void AddToList()
+void AddToList(LinkedList &list)
 {
-    int input;
-    int validInput;
+    Node * pNewNode = new Node;             //creates pNewNode dynamic mem address
+    
+    cout << "Enter a Value: ";
+    cin >> pNewNode->value;                 //with -> it auto dereferences it to the value stored, not the mem adress
+    pNewNode->Next = nullptr;
 
-        cout << "Enter a Value: ";
-        cin >> input;
+    if (list.Head == nullptr)               //checks for initial values
+        list.Head = pNewNode;               //sets as head
+    else
+    {
+        Node * current = list.Head;         //finds head of list, sets to current
 
-        //if (isdigit(input) == true)
-        //{
-        //    validInput = input;
-        //    isValidated = true;
-        //    break;
-        //}
-        //else
-        //{
-        //    cout << left << setfill('=') << setw(35) << "" << setfill(' ') << endl;
-        //    cout << "ERROR: Must input a valid integer" << endl;
-        //    cout << left << setfill('=') << setw(35) << "" << setfill(' ') << endl << endl;
-        //}
-        
+        while (current->Next != nullptr)    //loops through list until nullptr
+            current = current->Next;        //when !nullptr, sets to next (moving to next memory address in list)
+
+        current->Next = pNewNode;           //when nullptr, sets equal to pNewNode mem adress, with value stored by ref
+    }
 }
 
-bool DisplayMenu()
+bool DisplayMenu(LinkedList &list)
 {
     char menuInput;
     bool done = false;
@@ -72,7 +70,7 @@ bool DisplayMenu()
             case 'q': quit = true; done = true; break;
 
             case 'A':
-            case 'a': AddToList(); done = true; break;
+            case 'a': AddToList(list); done = true; break;      //passes list to be used in AddToList
 
             default:
             {
@@ -90,10 +88,12 @@ int main()
 {
     DisplayHeader();
 
+    LinkedList list;                    //creates a new variable in main to be passed into other functions!
+
     bool quit = false;
     while(true)
     {
-        quit = DisplayMenu();
+        quit = DisplayMenu(list);       //passes list to be used in functions
         if (quit == true)
             break;
     }
