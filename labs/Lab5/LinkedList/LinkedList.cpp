@@ -17,7 +17,7 @@ struct Node
 /// @brief LinkedList stores nodes
 struct LinkedList
 {
-    Node * Head = nullptr;                      //when using this, use pass by ref or mem. addresses
+    Node * Head = nullptr;
 };
 
 /// @brief Displays project header information
@@ -30,22 +30,22 @@ void DisplayHeader()
 
 /// @brief Adds value to list
 /// @param list passes LinkedList member access
-void AddToList(LinkedList &list)                //init &list means we can edit values by ref
+void AddToList(LinkedList &list)
 {
-    Node * pNewNode = new Node;                 //creates pNewNode dynamic mem address
+    Node * pNewNode = new Node;
     
     cout << "Enter a Value: ";
-    cin >> pNewNode->value;                     //with -> it auto dereferences it to the value stored, not the mem adress
+    cin >> pNewNode->value;
     pNewNode->pNext = nullptr;
 
-    if(list.Head == nullptr)                    //checks for initial values
-        list.Head = pNewNode;                   //sets as head (mem address)
+    if(list.Head == nullptr)
+        list.Head = pNewNode;
     else
     {
-        Node * pCurrent = list.Head;            //finds head of list, sets to current
+        Node * pCurrent = list.Head;
 
-        while (pCurrent->pNext != nullptr)      //loops through list until nullptr
-            pCurrent = pCurrent->pNext;         //when !nullptr, sets to next (moving to next memory address in list)
+        while (pCurrent->pNext != nullptr)
+            pCurrent = pCurrent->pNext;
 
         pCurrent->pNext = pNewNode;
     }
@@ -61,35 +61,35 @@ void DeleteFromList(LinkedList &list)
 
     if (list.Head == nullptr)
     {
-        cout << "ERROR: List is empty\n";       //Handles empty list and gets out of function
+        cout << "ERROR: List is empty\n";
         return;
     }
 
     Node * pCurrent = list.Head;
-    Node * pPrevious = nullptr;                 //makes a second variable to step with during loop
+    Node * pPrevious = nullptr;
 
-    if (pCurrent->value == toBeDeleted)         //if deleted value is the head
+    if (pCurrent->value == toBeDeleted)
     {
-        list.Head = pCurrent->pNext;            //sets Head to the next node
-        delete pCurrent;                        //deletes previous node no longer used (RAII)
+        list.Head = pCurrent->pNext;
+        delete pCurrent;
         cout << "Success\n";
-        return;                                 //exits function
+        return;
     }
 
     while (pCurrent != nullptr && pCurrent->value != toBeDeleted)
     {
         pPrevious = pCurrent;
-        pCurrent = pCurrent->pNext;             //moves current & previous to each of their next nodes respectively
+        pCurrent = pCurrent->pNext;
     }
 
-    if (pCurrent == nullptr)                    //if current equals nullptr before finding value
+    if (pCurrent == nullptr)
     {
         cout << "ERROR: No value match in list\n";
-        return;                                 //exits function
+        return;
     }
 
-    pPrevious->pNext = pCurrent->pNext;         //if funct hasn't exited, current is targeted at toBeDeleted, which means we can replace the node end points from previous into the current
-    delete pCurrent;                            //clear mem address (and value) from current
+    pPrevious->pNext = pCurrent->pNext;
+    delete pCurrent;
 
     cout << "Successfully deleted " << toBeDeleted << endl;
 }
@@ -109,12 +109,12 @@ void ClearList(LinkedList &list)
 
         while (pCurrent != nullptr)
         {
-            pNext = pCurrent->pNext;            //creates temp vairable "next" which allows us to delete "current->Next" safely.
+            pNext = pCurrent->pNext;
             delete pCurrent;
             pCurrent = pNext;
         }
 
-        list.Head = nullptr;                    //after using the head to delete the rest of the list, we set it to nullptr
+        list.Head = nullptr;
         cout << "Successfully cleared list\n";
     } 
     else
@@ -123,26 +123,26 @@ void ClearList(LinkedList &list)
 
 /// @brief Prints entire list
 /// @param list passes LinkedList member access
-void PrintList(const LinkedList &list)                              //Passed const list by ref for memory performance
+void PrintList(const LinkedList &list)
 {
-    Node * pCurrent = list.Head;                                    //looks at mem address of the head to call to
+    Node * pCurrent = list.Head;
     int count = 1;
 
     cout << setfill('*') << setw(48) << "" << setfill(' ') << endl;
 
-    while (pCurrent != nullptr && pCurrent->value % 10)             //while the value at the list is not nullptr
+    while (pCurrent != nullptr && pCurrent->value % 10)
     {
-        cout << setw(4) << pCurrent->value << " ";                  //displays the dereferenced value at the memaddress "current"
+        cout << setw(4) << pCurrent->value << " ";
         ++count;
 
         if ((count - 1) % 10 == 0)
             cout << endl;
 
-        pCurrent = pCurrent->pNext;                                 //moves to the next address if not nullptr
+        pCurrent = pCurrent->pNext;
     }
 
     if (count % 10 != 0)
-        cout << endl;                                               //always endl after last value printed
+        cout << endl;
 
     cout << setfill('*') << setw(48) << "" << setfill(' ') << endl;
 }
@@ -173,7 +173,7 @@ bool DisplayMenu(LinkedList &list)
         switch (menuInput)
         {
             case 'A':
-            case 'a': AddToList(list); cout << endl; done = true; break;      //passes list to be used in AddToList
+            case 'a': AddToList(list); cout << endl; done = true; break;
 
             case 'C':
             case 'c': ClearList(list); cout << endl; done = true; break;
@@ -203,15 +203,15 @@ int main()
 {
     DisplayHeader();
 
-    LinkedList list;                    //creates a new variable in main to be passed into other functions!
+    LinkedList list;
 
     bool quit = false;
     while(true)
     {
-        quit = DisplayMenu(list);       //passes list to be used in functions
+        quit = DisplayMenu(list);
         if (quit == true)
         {
-            ClearList(list);            //calls clearlist to ensure no memory leaks!
+            ClearList(list);
             break;
         }
     }
